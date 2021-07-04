@@ -83,7 +83,7 @@ namespace GalleryManagerConsole {
             Console.WriteLine("Indexer initialized.");
 
             // Setup importer
-            importer = new Importer(storage, indexer, path);
+            importer = new Importer(storage, path);
             Console.WriteLine("Importer initialized.");
 
             Console.WriteLine("Type in 'help' for command list.");
@@ -113,7 +113,7 @@ namespace GalleryManagerConsole {
                                     if (indexer.Working) {
                                         Console.WriteLine("Total files to index: " + indexer.FileCount);
                                         Console.WriteLine("Files indexed: " + indexer.FilesIndexed);
-                                        Console.WriteLine("Indexed percent: " + (indexer.FilesIndexed / indexer.FileCount));
+                                        Console.WriteLine("Indexed percent: " + (indexer.FilesIndexed / indexer.FileCount * 100.0));
                                     }
                                     break;
                                 default:
@@ -236,9 +236,13 @@ namespace GalleryManagerConsole {
                         break;
                     case "HELP":
                         Console.WriteLine("Available commands:");
-                        Console.WriteLine("EXIT/QUIT - stops the indexer/importer and exits");
-                        Console.WriteLine("CLEAR - clears the console");
-                        Console.WriteLine("HELP - displays this list");
+                        Console.WriteLine("INDEXER START/STOP/STATUS");
+                        Console.WriteLine("IMPORTER DRIVE ADD/REMOVE/LIST");
+                        Console.WriteLine("IMPORTER DIRECTORY ADD/REMOVE/LIST");
+                        Console.WriteLine("IMPORTER START/STATUS/REMOVEALL");
+                        Console.WriteLine("EXIT/QUIT");
+                        Console.WriteLine("CLEAR");
+                        Console.WriteLine("HELP");
                         break;
                     default:
                         Console.WriteLine("Unknown command. Type \"help\" for command list.");

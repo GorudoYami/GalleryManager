@@ -12,26 +12,25 @@ using System.Threading.Tasks;
 
 namespace GalleryManagerConsole {
     public class Importer {
-        private List<DriveInfo> drives;
-        private Dictionary<DriveInfo, List<Media>> driveImports;
-        private Dictionary<DriveInfo, Task> driveTask;
-        private Dictionary<DriveInfo, CancellationTokenSource> driveTokenSource;
-        private Dictionary<DriveInfo, Dictionary<string, int>> driveFileCount;
+        private readonly List<DriveInfo> drives;
+        private readonly Dictionary<DriveInfo, List<Media>> driveImports;
+        private readonly Dictionary<DriveInfo, Task> driveTask;
+        private readonly Dictionary<DriveInfo, CancellationTokenSource> driveTokenSource;
+        private readonly Dictionary<DriveInfo, Dictionary<string, int>> driveFileCount;
 
-        private List<DirectoryInfo> directories;
-        private Dictionary<DirectoryInfo, List<Media>> directoryImports;
-        private Dictionary<DirectoryInfo, Task> directoryTask;
-        private Dictionary<DirectoryInfo, CancellationTokenSource> directoryTokenSource;
-        private Dictionary<DirectoryInfo, Dictionary<string, int>> directoryFileCount;
+        private readonly List<DirectoryInfo> directories;
+        private readonly Dictionary<DirectoryInfo, List<Media>> directoryImports;
+        private readonly Dictionary<DirectoryInfo, Task> directoryTask;
+        private readonly Dictionary<DirectoryInfo, CancellationTokenSource> directoryTokenSource;
+        private readonly Dictionary<DirectoryInfo, Dictionary<string, int>> directoryFileCount;
 
         // Mutex for sync
-        private Mutex mtx;
+        private readonly Mutex mtx;
 
-        private IStorage storage;
-        private Indexer indexer;
-        private string galleryPath;
+        private readonly IStorage storage;
+        private readonly string galleryPath;
  
-        public Importer(IStorage storage, Indexer indexer, string galleryPath) {
+        public Importer(IStorage storage, string galleryPath) {
             drives = new List<DriveInfo>();
             driveImports = new Dictionary<DriveInfo, List<Media>>();
             driveTask = new Dictionary<DriveInfo, Task>();
@@ -47,7 +46,6 @@ namespace GalleryManagerConsole {
             mtx = new Mutex();
 
             this.storage = storage;
-            this.indexer = indexer;
             this.galleryPath = galleryPath.Replace("\\", "/");
         }
 
@@ -337,8 +335,15 @@ namespace GalleryManagerConsole {
                         while (File.Exists(subdir.FullName + "/" + name))
                             name = media.Name + "_" + n + media.Format;
                         File.Copy(media.Path, subdir.FullName + "/" + name);
+                        // Change path after copying
                         media.Path = subdir.FullName + "/" + name;
-                        //indexer.IndexMedia(media);
+
+                        // Insert index record into db
+                        if (Media.IsPicture(media))
+                            storage.AddPicture(media);
+                        else if (Media.IsVideo(media))
+                            storage.AddVideo(media);
+
                         importedFiles++;
                     }
                 }
