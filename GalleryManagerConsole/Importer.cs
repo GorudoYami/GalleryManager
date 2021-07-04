@@ -1,0 +1,399 @@
+﻿using GalleryManagerConsole.Storage;
+using GalleryManagerConsole.Types;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace GalleryManagerConsole {
+    public class Importer {
+        private List<DriveInfo> drives;
+        private Dictionary<DriveInfo, List<Media>> driveImports;
+        private Dictionary<DriveInfo, Task> driveTask;
+        private Dictionary<DriveInfo, CancellationTokenSource> driveTokenSource;
+        private Dictionary<DriveInfo, Dictionary<string, int>> driveFileCount;
+
+        private List<DirectoryInfo> directories;
+        private Dictionary<DirectoryInfo, List<Media>> directoryImports;
+        private Dictionary<DirectoryInfo, Task> directoryTask;
+        private Dictionary<DirectoryInfo, CancellationTokenSource> directoryTokenSource;
+        private Dictionary<DirectoryInfo, Dictionary<string, int>> directoryFileCount;
+
+        // Mutex for sync
+        private Mutex mtx;
+
+        private IStorage storage;
+        private Indexer indexer;
+        private string galleryPath;
+ 
+        public Importer(IStorage storage, Indexer indexer, string galleryPath) {
+            drives = new List<DriveInfo>();
+            driveImports = new Dictionary<DriveInfo, List<Media>>();
+            driveTask = new Dictionary<DriveInfo, Task>();
+            driveTokenSource = new Dictionary<DriveInfo, CancellationTokenSource>();
+            driveFileCount = new Dictionary<DriveInfo, Dictionary<string, int>>();
+
+            directories = new List<DirectoryInfo>();
+            directoryImports = new Dictionary<DirectoryInfo, List<Media>>();
+            directoryTask = new Dictionary<DirectoryInfo, Task>();
+            directoryTokenSource = new Dictionary<DirectoryInfo, CancellationTokenSource>();
+            directoryFileCount = new Dictionary<DirectoryInfo, Dictionary<string, int>>();
+
+            mtx = new Mutex();
+
+            this.storage = storage;
+            this.indexer = indexer;
+            this.galleryPath = galleryPath.Replace("\\", "/");
+        }
+
+        public void AddDrive(DriveInfo drive) {
+            Dictionary<string, int> fileCount = new();
+            fileCount["total"] = 0;
+            fileCount["processed"] = 0;
+            fileCount["videos"] = 0;
+            fileCount["pictures"] = 0;
+            fileCount["new-videos"] = 0;
+            fileCount["new-pictures"] = 0;
+
+            mtx.WaitOne();
+            if (drives.Contains(drive))
+                throw new Exception("Drive had already been added");
+            drives.Add(drive);
+            driveFileCount[drive] = fileCount;
+            driveTokenSource[drive] = new CancellationTokenSource();
+            driveTask[drive] = Task.Run(() => ProcessDrive(drive, driveTokenSource[drive].Token), driveTokenSource[drive].Token);
+            mtx.ReleaseMutex();
+        }
+
+        public void AddDirectory(DirectoryInfo directory) {
+            Dictionary<string, int> fileCount = new();
+            fileCount["total"] = 0;
+            fileCount["processed"] = 0;
+            fileCount["videos"] = 0;
+            fileCount["pictures"] = 0;
+            fileCount["new-videos"] = 0;
+            fileCount["new-pictures"] = 0;
+
+            mtx.WaitOne();
+            if (directories.Contains(directory)) {
+                Console.WriteLine("Directory has been already added!");
+                mtx.ReleaseMutex();
+                return;
+            }
+            directories.Add(directory);
+            directoryFileCount[directory] = fileCount;
+            directoryTokenSource[directory] = new CancellationTokenSource();
+            directoryTask[directory] = Task.Run(() => ProcessDirectory(directory, directoryTokenSource[directory].Token), directoryTokenSource[directory].Token);
+            mtx.ReleaseMutex();
+        }
+
+        public async Task RemoveDriveAsync(DriveInfo drive) {
+            mtx.WaitOne();
+            if (!drives.Contains(drive)) {
+                Console.WriteLine("Drive is not being processed!");
+                mtx.ReleaseMutex();
+                return;
+            }
+
+            driveTokenSource[drive].Cancel();
+            await driveTask[drive];
+            driveTokenSource[drive].Dispose();
+
+            if (driveImports.ContainsKey(drive))
+                driveImports.Remove(drive);
+            drives.Remove(drive);
+            driveTask.Remove(drive);
+            driveTokenSource.Remove(drive);
+            driveFileCount.Remove(drive);
+            mtx.ReleaseMutex();
+        }
+
+        public async Task RemoveDirectoryAsync(DirectoryInfo directory) {
+            mtx.WaitOne();
+            if (!directories.Contains(directory)) {
+                Console.WriteLine("Directory is not being processed!");
+                mtx.ReleaseMutex();
+                return;
+            }
+
+            directoryTokenSource[directory].Cancel();
+            await directoryTask[directory];
+            directoryTokenSource[directory].Dispose();
+
+            if (directoryImports.ContainsKey(directory))
+                directoryImports.Remove(directory);
+            directories.Remove(directory);
+            directoryTask.Remove(directory);
+            directoryTokenSource.Remove(directory);
+            directoryFileCount.Remove(directory);
+            mtx.ReleaseMutex();
+        }
+
+        public async void RemoveAll() {
+            mtx.WaitOne();
+            
+            // Iterate through processed drives
+            // Stop them and then cleanup
+            foreach (DriveInfo drive in drives) {
+                driveTokenSource[drive].Cancel();
+                await driveTask[drive];
+                driveTokenSource[drive].Dispose();
+            }
+
+            drives.Clear();
+            driveImports.Clear();
+            driveTask.Clear();
+            driveTokenSource.Clear();
+            driveFileCount.Clear();
+
+            // Iterate through processed drives
+            // Stop them and then cleanup
+            foreach (DirectoryInfo directory in directories) {
+                directoryTokenSource[directory].Cancel();
+                await directoryTask[directory];
+                directoryTokenSource[directory].Dispose();
+            }
+            directories.Clear();
+            directoryImports.Clear();
+            directoryTask.Clear();
+            directoryTokenSource.Clear();
+            directoryFileCount.Clear();
+
+            mtx.ReleaseMutex();
+        }
+
+        public bool IsAdded(DriveInfo drive) =>
+            drives.Contains(drive);
+
+        public bool IsAdded(DirectoryInfo directory) =>
+            directories.Contains(directory);
+
+        private void ProcessDrive(DriveInfo drive, CancellationToken token) {
+            SHA256 sha = SHA256.Create();
+            FileInfo[] files = drive.RootDirectory.GetFiles("*.*", SearchOption.AllDirectories);
+
+            // Get dictionary for import stats
+            mtx.WaitOne();
+            Dictionary<string, int> fileCount = driveFileCount[drive];
+            mtx.ReleaseMutex();
+            fileCount["total"] = files.Length;
+
+            List<Media> imports = new();
+
+            foreach (FileInfo file in files) {
+                fileCount["processed"]++;
+
+                if (!Media.IsVideo(file) && !Media.IsPicture(file) || file.Attributes.HasFlag(FileAttributes.Hidden) || file.Attributes.HasFlag(FileAttributes.System))
+                    continue;
+                else if (token.IsCancellationRequested)
+                    return;
+
+                if (Media.IsVideo(file))
+                    fileCount["videos"]++;
+                else
+                    fileCount["pictures"]++;
+
+                Media media = new() {
+                    Path = file.FullName.Replace("\\", "/"),
+                    Name = file.Name,
+                    Format = file.Extension,
+                    Size = (ulong)file.Length
+                };
+
+                // Calculate hash
+                FileStream fs = file.Open(FileMode.Open);
+                byte[] hash = sha.ComputeHash(fs);
+                fs.Close();
+                media.Hash = BitConverter.ToString(hash).Replace("-", string.Empty);
+
+                // Check if media exists in gallery
+                if (!storage.Contains(media)) {
+                    imports.Add(media);
+                    if (Media.IsVideo(file))
+                        fileCount["new-videos"]++;
+                    else
+                        fileCount["new-pictures"]++;
+                }
+
+                mtx.WaitOne();
+                driveFileCount[drive] = fileCount;
+                mtx.ReleaseMutex();
+            }
+
+            mtx.WaitOne();
+            driveImports[drive] = imports;
+            mtx.ReleaseMutex();
+            Console.WriteLine("Drive '" + drive.Name + "' has been processed:");
+            Console.WriteLine("Total files: " + fileCount["total"]);
+            Console.WriteLine("Total pictures: " + fileCount["pictures"]);
+            Console.WriteLine("Total videos: " + fileCount["videos"]);
+            Console.WriteLine("New pictures: " + fileCount["new-pictures"]);
+            Console.WriteLine("New videos: " + fileCount["new-videos"]);
+        }
+
+        private void ProcessDirectory(DirectoryInfo directory, CancellationToken token) {
+            SHA256 sha = SHA256.Create();
+            FileInfo[] files = directory.GetFiles("*.*", SearchOption.AllDirectories);
+
+            mtx.WaitOne();
+            Dictionary<string, int> fileCount = directoryFileCount[directory];
+            mtx.ReleaseMutex();
+            fileCount["total"] = files.Length;
+
+            List<Media> imports = new();
+
+            foreach (FileInfo file in files) {
+                fileCount["processed"]++;
+
+                if (!Media.IsVideo(file) && !Media.IsPicture(file) || file.Attributes.HasFlag(FileAttributes.Hidden) || file.Attributes.HasFlag(FileAttributes.System))
+                    continue;
+                else if (token.IsCancellationRequested)
+                    return;
+
+                if (Media.IsVideo(file))
+                    fileCount["videos"]++;
+                else
+                   fileCount["pictures"]++;
+
+                Media media = new() {
+                    Path = file.FullName.Replace("\\", "/"),
+                    Name = file.Name,
+                    Format = file.Extension,
+                    Size = (ulong)file.Length
+                };
+
+
+                // Calculate hash
+                FileStream fs = file.Open(FileMode.Open);
+                byte[] hash = sha.ComputeHash(fs);
+                fs.Close();
+                media.Hash = BitConverter.ToString(hash).Replace("-", string.Empty);
+
+                // Check if media exists in gallery
+                if (!storage.Contains(media)) {
+                    imports.Add(media);
+                    if (Media.IsVideo(file))
+                        fileCount["new-videos"]++;
+                    else
+                        fileCount["new-pictures"]++;
+                }
+
+                mtx.WaitOne();
+                directoryFileCount[directory] = fileCount;
+                mtx.ReleaseMutex();
+            }
+
+            mtx.WaitOne();
+            directoryImports[directory] = imports;
+            mtx.ReleaseMutex();
+            Console.WriteLine("Directory '" + directory.Name + "' has been processed:");
+            Console.WriteLine("Total files: " + fileCount["total"]);
+            Console.WriteLine("Total pictures: " + fileCount["pictures"]);
+            Console.WriteLine("Total videos: " + fileCount["videos"]);
+            Console.WriteLine("New pictures: " + fileCount["new-pictures"]);
+            Console.WriteLine("New videos: " + fileCount["new-videos"]);
+        }
+
+        public async void Import() {
+            await Task.Run(() => {
+                mtx.WaitOne();
+
+                // Calculate total imports
+                int totalFiles = 0;
+                foreach (DriveInfo drive in drives) {
+                    List<Media> mediaList = driveImports[drive];
+                    totalFiles += mediaList.Count;
+                }
+
+                foreach (DirectoryInfo directory in directories) {
+                    List<Media> mediaList = directoryImports[directory];
+                    totalFiles += mediaList.Count;
+                }
+
+                // Iterate drives
+                int importedFiles = 0;
+                foreach (DriveInfo drive in drives) {
+                    List<Media> mediaList = driveImports[drive];
+                    if (mediaList.Count == 0)
+                        continue;
+
+                    // Iterate media for import
+                    foreach (Media media in mediaList) {
+                        // Create a subdir in gallery if there isn't one matching the pattern:
+                        // yyyy-MM
+                        string dirname = File.GetCreationTime(media.Path).ToString("yyyy-MM");
+                        DirectoryInfo subdir = new(galleryPath + "/" + dirname);
+                        if (!subdir.Exists)
+                            subdir.Create();
+
+                        // Make sure that the file has a unique name
+                        string name = media.Name;
+                        int n = 1;
+                        while (File.Exists(subdir.FullName + "/" + name))
+                            name = media.Name + "_" + n + media.Format;
+                        File.Copy(media.Path, subdir.FullName + "/" + name);
+                        media.Path = subdir.FullName + "/" + name;
+                        //indexer.IndexMedia(media);
+                        importedFiles++;
+                    }
+                }
+
+                // Iterate directories
+                foreach (DirectoryInfo directory in directories) {
+                    List<Media> mediaList = directoryImports[directory];
+                    if (mediaList.Count == 0)
+                        continue;
+
+                    // Iterate media for import
+                    foreach (Media media in mediaList) {
+                        // Create a subdir in gallery if there isn't one matching the pattern:
+                        // yyyy-MM
+                        string dirname = File.GetCreationTime(media.Path).ToString("yyyy-MM");
+                        DirectoryInfo subdir = new(galleryPath + "/" + dirname);
+                        if (!subdir.Exists)
+                            subdir.Create();
+
+                        // Make sure that the file has a unique name
+                        string name = media.Name;
+                        int n = 1;
+                        while (File.Exists(subdir.FullName + "/" + name))
+                            name = media.Name + "_" + n + media.Format;
+                        File.Copy(media.Path, subdir.FullName + "/" + name);
+                        media.Path = subdir.FullName + "/" + name;
+                        //indexer.IndexMedia(media);
+                        importedFiles++;
+                    }
+                }
+                mtx.ReleaseMutex();
+                Console.WriteLine("Importing process has been completed!");
+            });
+        }
+
+        public Task<bool> ImportReadyAsync() {
+            return Task.Run(() => {
+                bool result = true;
+                mtx.WaitOne();
+                foreach (DriveInfo drive in drives) {
+                    if (!driveImports.ContainsKey(drive)) {
+                        result = false;
+                        break;
+                    }
+                }
+
+                foreach (DirectoryInfo directory in directories) {
+                    if (!directoryImports.ContainsKey(directory)) {
+                        result = false;
+                        break;
+                    }
+                }
+                mtx.ReleaseMutex();
+                return result;
+            });
+        }
+    }
+}

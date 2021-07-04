@@ -1,0 +1,6 @@
+﻿TODO:
+	->	Add media info in browser
+	->	Fix importer counting (when you remove directory/drive it doesn't subtract files)
+	->	Bugfixes
+	->	Default location cannot be simply Z:\ - rather let it be empty, and if empty don't load Media
+	->	On startup make an async so the ui shows rather than waits for connection
