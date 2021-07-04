@@ -324,7 +324,7 @@ namespace GalleryManagerConsole {
                     foreach (Media media in mediaList) {
                         // Create a subdir in gallery if there isn't one matching the pattern:
                         // yyyy-MM
-                        string dirname = File.GetCreationTime(media.Path).ToString("yyyy-MM");
+                        string dirname = File.GetLastWriteTime(media.Path).ToString("yyyy-MM");
                         DirectoryInfo subdir = new(galleryPath + "/" + dirname);
                         if (!subdir.Exists)
                             subdir.Create();

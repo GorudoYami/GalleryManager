@@ -177,10 +177,22 @@ namespace GalleryManagerConsole {
                                     if (cmd.Length > 2) {
                                         switch (cmd[2].ToUpper()) {
                                             case "ADD":
+                                                if (cmd.Length > 3) {
+                                                    if (Directory.Exists(cmd[3])) {
+                                                        importer.AddDirectory(new DirectoryInfo(cmd[3]));
+                                                        Console.WriteLine("Directory '" + cmd[3] + "' has been added!");
+                                                    }
+                                                    else
+                                                        Console.WriteLine("Directory doesn't exist!");
+                                                }
                                                 break;
                                             case "REMOVE":
-                                                break;
-                                            case "LIST":
+                                                if (cmd.Length > 3) {
+                                                    if (Directory.Exists(cmd[3]) && importer.IsAdded(new DirectoryInfo(cmd[3]))) {
+                                                        await importer.RemoveDirectoryAsync(new DirectoryInfo(cmd[3]));
+                                                        Console.WriteLine("Directory '" + cmd[3] + "' has been removed!");
+                                                    }
+                                                }
                                                 break;
                                             default:
                                                 Console.WriteLine("Unknown argument: '" + cmd[2] + "'");
@@ -238,7 +250,7 @@ namespace GalleryManagerConsole {
                         Console.WriteLine("Available commands:");
                         Console.WriteLine("INDEXER START/STOP/STATUS");
                         Console.WriteLine("IMPORTER DRIVE ADD/REMOVE/LIST");
-                        Console.WriteLine("IMPORTER DIRECTORY ADD/REMOVE/LIST");
+                        Console.WriteLine("IMPORTER DIRECTORY ADD/REMOVE");
                         Console.WriteLine("IMPORTER START/STATUS/REMOVEALL");
                         Console.WriteLine("EXIT/QUIT");
                         Console.WriteLine("CLEAR");

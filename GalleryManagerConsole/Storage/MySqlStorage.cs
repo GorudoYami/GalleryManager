@@ -230,6 +230,8 @@ namespace GalleryManagerConsole.Storage {
         // This method checks if a file in the specified location is indexed (has a record in db)
         public bool IsIndexed(Media media) {
             using MySqlConnection connection = GetConnection();
+            media.Path = media.Path.Replace("\\", "/");
+            media.RelativePath = media.RelativePath.Replace("\\", "/");
             try {
                 connection.Open();
 
