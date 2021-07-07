@@ -5,7 +5,7 @@ Application that allows you to manage your photos and videos.
 - Indexing photos and videos
 - Importing new photos and videos from drives, sd cards, directories
 - MySQL database as index storage
-## TODO:
+### TODO:
 - Duplicate finding
 - DB Cleanup
 - More storage options
