@@ -1,4 +1,4 @@
-### GalleryManager
+# GalleryManager
 ## ENG Description
 Application that allows you to manage your photos and pictures.
 ### Features:
