@@ -22,3 +22,6 @@ Aplikacja pozwalajaca na zarzadzanie zdjeciami i filmami.
 - Znajdowanie duplikatow
 - Oczyszczanie bazy danych
 - Wiecej opcji do przechowywania indeksow
+### Wersje:
+- Konsolowa
+- Interfejsowa (w tej chwili nieaktualna na razie)
