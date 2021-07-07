@@ -228,7 +228,7 @@ namespace GalleryManagerConsole {
                                 case "START":
                                     if (await importer.ImportReadyAsync()) {
                                         Console.WriteLine("Beginning importing process...");
-                                        importer.Import();
+                                        importer.StartImport();
                                         break;
                                     }
                                     else {

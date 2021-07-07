@@ -5,26 +5,30 @@ using System.IO;
 using MySql.Data.MySqlClient;
 
 using GalleryManagerConsole.Types;
+using System.Threading.Tasks;
 
 namespace GalleryManagerConsole.Storage {
     public class MySqlStorage : IStorage {
         public string ConnectionString { get; set; }
-        private readonly List<string> tables;
+        private readonly List<string> sql;
+        private readonly string galleryPath;
 
-        public MySqlStorage(ConnectionInfo info) {
+        public MySqlStorage(ConnectionInfo info, string galleryPath) {
             CreateConnectionString(info);
-            tables = new List<string>();
+            sql = new List<string>();
             using (var reader = new StreamReader("SQL/albums.sql"))
-                tables.Add(reader.ReadToEnd());
+                sql.Add(reader.ReadToEnd());
 
             using (var reader = new StreamReader("SQL/videos.sql"))
-                tables.Add(reader.ReadToEnd());
+                sql.Add(reader.ReadToEnd());
 
             using (var reader = new StreamReader("SQL/pictures.sql"))
-                tables.Add(reader.ReadToEnd());
+                sql.Add(reader.ReadToEnd());
 
             using (var reader = new StreamReader("SQL/unknowns.sql"))
-                tables.Add(reader.ReadToEnd());
+                sql.Add(reader.ReadToEnd());
+
+            this.galleryPath = galleryPath;
         }
 
         private MySqlConnection GetConnection() =>
@@ -89,7 +93,7 @@ namespace GalleryManagerConsole.Storage {
                 // Create "albums"
                 if (createAlbums) {
                     using MySqlCommand cmd = connection.CreateCommand();
-                    cmd.CommandText = tables[0];
+                    cmd.CommandText = sql[0];
                     cmd.Transaction = transaction;
 
                     if (cmd.ExecuteNonQuery() == -1) {
@@ -101,7 +105,7 @@ namespace GalleryManagerConsole.Storage {
                 // Create "videos"
                 if (createVideos) {
                     using MySqlCommand cmd = connection.CreateCommand();
-                    cmd.CommandText = tables[1];
+                    cmd.CommandText = sql[1];
                     cmd.Transaction = transaction;
 
                     if (cmd.ExecuteNonQuery() == -1) {
@@ -113,7 +117,7 @@ namespace GalleryManagerConsole.Storage {
                 // Create "pictures"
                 if (createPictures) {
                     using MySqlCommand cmd = connection.CreateCommand();
-                    cmd.CommandText = tables[2];
+                    cmd.CommandText = sql[2];
                     cmd.Transaction = transaction;
 
                     if (cmd.ExecuteNonQuery() == -1) {
@@ -125,7 +129,7 @@ namespace GalleryManagerConsole.Storage {
                 // Create "unknowns"
                 if (createUnknowns) {
                     using MySqlCommand cmd = connection.CreateCommand();
-                    cmd.CommandText = tables[3];
+                    cmd.CommandText = sql[3];
                     cmd.Transaction = transaction;
 
                     if (cmd.ExecuteNonQuery() == -1) {
@@ -137,7 +141,6 @@ namespace GalleryManagerConsole.Storage {
                 transaction.Commit();
             }
             catch (Exception e) {
-                Console.WriteLine("MySqlDatabase.Setup()");
                 Console.WriteLine(e.GetType());
                 Console.WriteLine(e.Message);
                 return false;
@@ -345,8 +348,24 @@ namespace GalleryManagerConsole.Storage {
             throw new NotImplementedException();
         }
 
-        public bool Cleanup() {
-            throw new NotImplementedException();
+        public async Task<bool> Cleanup() {
+            using MySqlConnection connection = GetConnection();
+            try {
+                connection.Open();
+                using MySqlCommand cmd = connection.CreateCommand();
+                cmd.CommandText = "SELECT * FROM `pictures`;";
+                using var reader = await cmd.ExecuteReaderAsync();
+                List<string> trashList = new();
+                while (reader.Read()) {
+                    string path = galleryPath + reader["path"];
+                }
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.GetType());
+                Console.WriteLine(e.Message);
+                return false;
+            }
+            return true;
         }
 
         public bool Delete(List<Media> delete) {

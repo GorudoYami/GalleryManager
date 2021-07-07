@@ -12,6 +12,11 @@ using System.Threading.Tasks;
 
 namespace GalleryManagerConsole {
     public class Importer {
+        // IMPORTANT
+        // TODO
+        // Merge DriveInfo and DirectoryInfo?
+        // It's derived from FileSystemInfo
+
         private readonly List<DriveInfo> drives;
         private readonly Dictionary<DriveInfo, List<Media>> driveImports;
         private readonly Dictionary<DriveInfo, Task> driveTask;
@@ -60,7 +65,7 @@ namespace GalleryManagerConsole {
 
             mtx.WaitOne();
             if (drives.Contains(drive))
-                throw new Exception("Drive had already been added");
+                throw new Exception("Drive has already been added");
             drives.Add(drive);
             driveFileCount[drive] = fileCount;
             driveTokenSource[drive] = new CancellationTokenSource();
@@ -204,13 +209,20 @@ namespace GalleryManagerConsole {
                 };
 
                 // Calculate hash
-                FileStream fs = file.Open(FileMode.Open);
-                byte[] hash = sha.ComputeHash(fs);
-                fs.Close();
-                media.Hash = BitConverter.ToString(hash).Replace("-", string.Empty);
+                try {
+                    FileStream fs = file.Open(FileMode.Open);
+                    byte[] hash = sha.ComputeHash(fs);
+                    fs.Close();
+                    media.Hash = BitConverter.ToString(hash).Replace("-", string.Empty);
+                }
+                catch (Exception e) {
+                    Console.WriteLine(e.GetType());
+                    Console.WriteLine(e.Message);
+                    continue;
+                }
 
-                // Check if media exists in gallery
-                if (!storage.Contains(media)) {
+            // Check if media exists in gallery
+            if (!storage.Contains(media)) {
                     imports.Add(media);
                     if (Media.IsVideo(file))
                         fileCount["new-videos"]++;
@@ -267,10 +279,17 @@ namespace GalleryManagerConsole {
 
 
                 // Calculate hash
-                FileStream fs = file.Open(FileMode.Open);
-                byte[] hash = sha.ComputeHash(fs);
-                fs.Close();
-                media.Hash = BitConverter.ToString(hash).Replace("-", string.Empty);
+                try {
+                    FileStream fs = file.Open(FileMode.Open);
+                    byte[] hash = sha.ComputeHash(fs);
+                    fs.Close();
+                    media.Hash = BitConverter.ToString(hash).Replace("-", string.Empty);
+                }
+                catch (Exception e) {
+                    Console.WriteLine(e.GetType());
+                    Console.WriteLine(e.Message);
+                    continue;
+                }
 
                 // Check if media exists in gallery
                 if (!storage.Contains(media)) {
@@ -297,12 +316,13 @@ namespace GalleryManagerConsole {
             Console.WriteLine("New videos: " + fileCount["new-videos"]);
         }
 
-        public async void Import() {
+        public async void StartImport() {
             await Task.Run(() => {
                 mtx.WaitOne();
 
-                // Calculate total imports
+                int importedFiles = 0;
                 int totalFiles = 0;
+                // Calculate total imports
                 foreach (DriveInfo drive in drives) {
                     List<Media> mediaList = driveImports[drive];
                     totalFiles += mediaList.Count;
@@ -314,38 +334,11 @@ namespace GalleryManagerConsole {
                 }
 
                 // Iterate drives
-                int importedFiles = 0;
                 foreach (DriveInfo drive in drives) {
                     List<Media> mediaList = driveImports[drive];
                     if (mediaList.Count == 0)
                         continue;
-
-                    // Iterate media for import
-                    foreach (Media media in mediaList) {
-                        // Create a subdir in gallery if there isn't one matching the pattern:
-                        // yyyy-MM
-                        string dirname = File.GetLastWriteTime(media.Path).ToString("yyyy-MM");
-                        DirectoryInfo subdir = new(galleryPath + "/" + dirname);
-                        if (!subdir.Exists)
-                            subdir.Create();
-
-                        // Make sure that the file has a unique name
-                        string name = media.Name;
-                        int n = 1;
-                        while (File.Exists(subdir.FullName + "/" + name))
-                            name = media.Name + "_" + n + media.Format;
-                        File.Copy(media.Path, subdir.FullName + "/" + name);
-                        // Change path after copying
-                        media.Path = subdir.FullName + "/" + name;
-
-                        // Insert index record into db
-                        if (Media.IsPicture(media))
-                            storage.AddPicture(media);
-                        else if (Media.IsVideo(media))
-                            storage.AddVideo(media);
-
-                        importedFiles++;
-                    }
+                    importedFiles += Import(mediaList);
                 }
 
                 // Iterate directories
@@ -353,30 +346,63 @@ namespace GalleryManagerConsole {
                     List<Media> mediaList = directoryImports[directory];
                     if (mediaList.Count == 0)
                         continue;
-
-                    // Iterate media for import
-                    foreach (Media media in mediaList) {
-                        // Create a subdir in gallery if there isn't one matching the pattern:
-                        // yyyy-MM
-                        string dirname = File.GetCreationTime(media.Path).ToString("yyyy-MM");
-                        DirectoryInfo subdir = new(galleryPath + "/" + dirname);
-                        if (!subdir.Exists)
-                            subdir.Create();
-
-                        // Make sure that the file has a unique name
-                        string name = media.Name;
-                        int n = 1;
-                        while (File.Exists(subdir.FullName + "/" + name))
-                            name = media.Name + "_" + n + media.Format;
-                        File.Copy(media.Path, subdir.FullName + "/" + name);
-                        media.Path = subdir.FullName + "/" + name;
-                        //indexer.IndexMedia(media);
-                        importedFiles++;
-                    }
+                    importedFiles += Import(mediaList);
                 }
+
                 mtx.ReleaseMutex();
                 Console.WriteLine("Importing process has been completed!");
+                Console.WriteLine("Total imported files: " + importedFiles);
             });
+        }
+
+        private int Import(List<Media> mediaList) {
+            int importedFiles = 0;
+            foreach (Media media in mediaList) {
+                // Create a subdir in gallery if there isn't one matching the pattern:
+                // yyyy-MM
+                string dirName = File.GetLastWriteTime(media.Path).ToString("yyyy-MM");
+                DirectoryInfo subdir = new(galleryPath + "/" + dirName);
+                try {
+                    if (!Directory.Exists(subdir.FullName))
+                        subdir.Create();
+                }
+                catch (Exception e) {
+                    Console.WriteLine("ERROR: " + e.GetType());
+                    Console.WriteLine(e.Message);
+                    continue;
+                }
+
+                // Make sure that the file has a unique name
+                string oldName = media.Name.Remove(media.Name.LastIndexOf("."));
+                string newName = oldName;
+                int n = 1;
+                while (File.Exists(subdir.FullName + "/" + newName + media.Format))
+                    newName = oldName + " (" + n++ + ")";
+
+                // Copy
+                try {
+                    File.Copy(media.Path, subdir.FullName + "/" + newName + media.Format);
+                }
+                catch (Exception e) {
+                    Console.WriteLine("ERROR: " + e.GetType());
+                    Console.WriteLine(e.Message);
+                    continue;
+                }
+
+                // Change path after copying
+                media.Path = subdir.FullName.Replace("\\", "/") + "/" + newName + media.Format;
+                media.Name = newName;
+                media.RelativePath = media.Path.Remove(0, galleryPath.Length + 1).Replace("\\", "/");
+
+                // Insert index record into db
+                if (Media.IsPicture(media))
+                    storage.AddPicture(media);
+                else if (Media.IsVideo(media))
+                    storage.AddVideo(media);
+
+                importedFiles++;
+            }
+            return importedFiles;
         }
 
         public Task<bool> ImportReadyAsync() {
