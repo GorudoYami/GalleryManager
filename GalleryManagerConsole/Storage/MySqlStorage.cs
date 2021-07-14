@@ -349,22 +349,50 @@ namespace GalleryManagerConsole.Storage {
         }
 
         public async Task<bool> Cleanup() {
+            List<int> trashList = new();
+            string[] tables = {
+                "`pictures`",
+                "`videos`",
+                "`unknowns`"
+            };
+
             using MySqlConnection connection = GetConnection();
             try {
                 connection.Open();
-                using MySqlCommand cmd = connection.CreateCommand();
-                cmd.CommandText = "SELECT * FROM `pictures`;";
-                using var reader = await cmd.ExecuteReaderAsync();
-                List<string> trashList = new();
-                while (reader.Read()) {
-                    string path = galleryPath + reader["path"];
-                }
             }
             catch (Exception e) {
                 Console.WriteLine(e.GetType());
                 Console.WriteLine(e.Message);
                 return false;
             }
+
+            int deletedCount = 0;
+            foreach (string table in tables) {
+                using (MySqlCommand cmd = connection.CreateCommand()) {
+                    cmd.CommandText = "SELECT * FROM " + table + ";";
+                    using var reader = await cmd.ExecuteReaderAsync();
+
+                    // Get all non-existing files
+                    while (reader.Read()) {
+                        string path = galleryPath + Convert.ToString(reader["path"]);
+                        if (!File.Exists(path))
+                            trashList.Add(Convert.ToInt32(reader["id"]));
+                    }
+                }
+
+                // Delete them
+                foreach (int id in trashList) {
+                    using MySqlCommand cmd = connection.CreateCommand();
+                    cmd.CommandText = "DELETE FROM " + table + " WHERE id = @Id;";
+                    cmd.Parameters.Add("@Id", MySqlDbType.Int32).Value = id;
+                    if (await cmd.ExecuteNonQueryAsync() != 1)
+                        return false;
+                }
+                deletedCount += trashList.Count;
+                trashList.Clear();
+            }
+            Console.WriteLine("Cleanup complete!");
+            Console.WriteLine("Deleted records: " + deletedCount);
             return true;
         }
 

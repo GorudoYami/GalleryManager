@@ -67,9 +67,10 @@ namespace GalleryManagerConsole {
                 Password = password,
                 Database = database
             };
+            path = path.Replace("\\", "/");
 
             // Setup database
-            MySqlStorage storage = new(connectionInfo);
+            MySqlStorage storage = new(connectionInfo, path);
 
             if (storage.Setup())
                 Console.WriteLine("Storage setup successful!");
@@ -243,6 +244,11 @@ namespace GalleryManagerConsole {
                         else
                             Console.WriteLine("Too few arguments!");
                         break;
+                    case "CLEANUP":
+                        Console.WriteLine("Starting cleanup process...");
+                        if (!await storage.Cleanup())
+                            Console.WriteLine("Cleanup failed!");
+                        break;
                     case "CLEAR":
                         Console.Clear();
                         break;
@@ -252,6 +258,7 @@ namespace GalleryManagerConsole {
                         Console.WriteLine("IMPORTER DRIVE ADD/REMOVE/LIST");
                         Console.WriteLine("IMPORTER DIRECTORY ADD/REMOVE");
                         Console.WriteLine("IMPORTER START/STATUS/REMOVEALL");
+                        Console.WriteLine("CLEANUP");
                         Console.WriteLine("EXIT/QUIT");
                         Console.WriteLine("CLEAR");
                         Console.WriteLine("HELP");

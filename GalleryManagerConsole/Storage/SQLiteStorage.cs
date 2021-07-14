@@ -20,7 +20,7 @@ namespace GalleryManagerConsole.Storage {
             throw new NotImplementedException();
         }
 
-        public bool Cleanup() {
+        public Task<bool> Cleanup() {
             throw new NotImplementedException();
         }
 

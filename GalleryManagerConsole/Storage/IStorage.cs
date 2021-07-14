@@ -17,7 +17,7 @@ namespace GalleryManagerConsole.Storage {
         public ulong TotalVideos();
         public ulong TotalFiles();
         //public List<Media> GetDuplicates(Media.Type type);
-        public async Task<bool> Cleanup();
+        public Task<bool> Cleanup();
         public bool Delete(List<Media> delete);
         public bool Contains(Media media);
     }
