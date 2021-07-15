@@ -6,7 +6,7 @@ Application that allows you to manage your photos and videos.
 - Importing new photos and videos from drives, sd cards, directories
 - MySQL database as index storage
 - DB Cleanup
-### TODO:
+### In future:
 - Duplicate finding
 - More storage options
 ### Versions:
@@ -19,9 +19,9 @@ Aplikacja pozwalajaca na zarzadzanie zdjeciami i filmami.
 - Import nowych zdjec oraz filmow z kart SD, dyskow, katalogow
 - Przechowywanie indeksow w bazie MySQL
 - Oczyszczanie bazy danych
-### Do zrobienia:
+### W przyszlosci:
 - Znajdowanie duplikatow
 - Wiecej opcji do przechowywania indeksow
 ### Wersje:
 - Konsolowa
-- Interfejsowa (w tej chwili nieaktualna na razie)
+- Interfejsowa (w tej chwili nieaktualna)
