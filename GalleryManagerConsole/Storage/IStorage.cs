@@ -13,9 +13,9 @@ namespace GalleryManagerConsole.Storage {
         public bool AddVideo(Media video);
         public bool AddUnknown(Media media);
         public bool IsIndexed(Media media);
-        public ulong TotalPictures();
-        public ulong TotalVideos();
-        public ulong TotalFiles();
+        public long TotalPictures();
+        public long TotalVideos();
+        public long TotalFiles();
         //public List<Media> GetDuplicates(Media.Type type);
         public Task<bool> Cleanup();
         public bool Delete(List<Media> delete);

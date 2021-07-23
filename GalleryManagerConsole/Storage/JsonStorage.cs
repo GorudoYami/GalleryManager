@@ -44,15 +44,15 @@ namespace GalleryManagerConsole.Storage {
             throw new NotImplementedException();
         }
 
-        public ulong TotalFiles() {
+        public long TotalFiles() {
             throw new NotImplementedException();
         }
 
-        public ulong TotalPictures() {
+        public long TotalPictures() {
             throw new NotImplementedException();
         }
 
-        public ulong TotalVideos() {
+        public long TotalVideos() {
             throw new NotImplementedException();
         }
     }

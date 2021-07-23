@@ -19,12 +19,12 @@ namespace GalleryManagerConsole {
         private ulong filesIndexed;
         public ulong FilesIndexed { get { return filesIndexed; } }
 
-        private readonly MySqlStorage storage;
+        private readonly IStorage storage;
         private Task task;
         private CancellationTokenSource tokenSource;
         private readonly string galleryPath;
 
-        public Indexer(MySqlStorage storage, string galleryPath) {
+        public Indexer(IStorage storage, string galleryPath) {
             this.storage = storage;
             this.galleryPath = galleryPath.Replace("\\", "/");
             filesCount = 0;

@@ -1,19 +1,16 @@
-﻿using System;
+﻿using System.Configuration;
+using System.Collections.Specialized;
+using System;
 using System.Timers;
+using System.Threading.Tasks;
+using System.IO;
+using System.Collections.Generic;
 
 using GalleryManagerConsole.Types;
 using GalleryManagerConsole.Storage;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.IO;
 
 namespace GalleryManagerConsole {
     public class Program {
-        //private static DateTime timestamp;
-        //private static double progressValue;
-        //private static bool autoUpdate;
-        //private static Timer timer;
-        //private static uint updateInterval;
 
         private static Indexer indexer;
         private static Importer importer;
@@ -25,6 +22,23 @@ namespace GalleryManagerConsole {
             MainAsync(args).GetAwaiter().GetResult();
 
         public static async Task MainAsync(string[] args) {
+            //menuList = new List<string[]>() {
+            //    new string[] { "Choose storage method", "SQLite", "MySQL", "JSON" },
+            //    new string[] { "Enter MySQL connection info", "IP: ", "Port: ", "User: ", "Password: ", "Database: " },
+            //    new string[] { "Enter gallery path", "Path: " },
+            //    new string[] { "Always ask for configuration?", "Yes", "No" },
+            //    new string[] { "Main menu", "Indexer", "Importer", "Exit" },
+            //    new string[] { "Indexer menu", "Start indexer", "Stop indexer", "Cleanup" },
+            //    new string[] { "Importer menu", "Add/remove directory", "Add/remove drive", "Import" }
+            //};
+
+            //if (Convert.ToBoolean(ConfigurationManager.AppSettings.Get("AskForConfig"))) {
+            //    DrawMenu(0, 0);
+            //}
+            //else {
+            //    DrawMenu()
+            //}
+
             // Variable setup
             string server, user, password, database, path;
 
@@ -65,12 +79,14 @@ namespace GalleryManagerConsole {
                 Port = host[1],
                 User = user,
                 Password = password,
-                Database = database
+                Database = database,
+                Type = ConnectionType.MySQL,
             };
+            connectionInfo.CreateConnectionString();
             path = path.Replace("\\", "/");
 
             // Setup database
-            MySqlStorage storage = new(connectionInfo, path);
+            IStorage storage = new DatabaseStorage(connectionInfo, path);
 
             if (storage.Setup())
                 Console.WriteLine("Storage setup successful!");
@@ -273,6 +289,10 @@ namespace GalleryManagerConsole {
             if (indexer.Working)
                 indexer.Stop();
             importer.RemoveAll();
+        }
+
+        private static void DrawMenu(int index, int selected) {
+
         }
 
         private static void UpdateDrives(object sender, ElapsedEventArgs e) {
