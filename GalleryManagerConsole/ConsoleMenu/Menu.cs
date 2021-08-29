@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace MenuProject {
+namespace GalleryManagerConsole.ConsoleMenu {
     public class Menu {
         public MenuItem ActiveItem { get; private set; }
         public int ActiveItemIndex { get; private set; }
@@ -15,6 +15,7 @@ namespace MenuProject {
         public ConsoleColor ActiveColor { get; set; }
         public string HeaderText { get; set; }
         public List<MenuItem> Items { get; set; }
+        public bool Choice { get; set; }
 
         private System.Timers.Timer updateTimer;
         private Mutex mtx;
@@ -26,6 +27,7 @@ namespace MenuProject {
             HeaderColor = ConsoleColor.White;
             ItemColor = ConsoleColor.Gray;
             ActiveColor = ConsoleColor.DarkRed;
+            Choice = false;
 
             updateTimer = new System.Timers.Timer();
             updateTimer.Elapsed += UpdateTimer_Elapsed;
@@ -46,7 +48,7 @@ namespace MenuProject {
 
         private void Loop() {
             bool exit = false;
-            updateTimer.Start();
+            //updateTimer.Start();
             while (!exit) {
                 var key = Console.ReadKey(true).Key;
                 if (key == ConsoleKey.UpArrow) {
@@ -80,14 +82,16 @@ namespace MenuProject {
                         Console.SetCursorPosition(0, 0);
                     }
                     ActiveItem.OnItemSelected(new EventArgs());
+                    if (Choice || ActiveItem.Exit)
+                        exit = true;
                 }
-                else if (key == ConsoleKey.Escape) {
-                    Console.Clear();
+                else if (key == ConsoleKey.Escape)
                     exit = true;
-                }
             }
-            updateTimer.Stop();
+            //updateTimer.Stop();
+            Console.Clear();
         }
+
         private void Draw() {
             mtx.WaitOne();
             Console.BackgroundColor = ConsoleColor.Black;
@@ -142,9 +146,31 @@ namespace MenuProject {
                 Console.SetCursorPosition(0, 0);
             mtx.ReleaseMutex();
         }
-        private void UpdateTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
-            if (Console.WindowHeight != Height || Console.WindowWidth != Width)
-                Draw();
+
+        private void UpdateTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) { 
+                Update();
+        }
+
+        public void Update() =>
+            Draw();
+
+        public void ShowMessage(string msg) {
+            mtx.WaitOne();
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Width = Console.WindowWidth;
+            Height = Console.WindowHeight;
+            int optLength = Width / 3;
+            int boxWidth = optLength + 2;
+            int boxHeight = msg.Length / optLength;
+
+            for (int i = 0; i < boxHeight - 2; i++) {
+                int y = Height / 7;
+                int x = (Width / 2) - ((optLength + 2) / 2);
+                Console.SetCursorPosition(x, y);
+                for (int q = 0; q < optLength + 2; q++)
+                    Console.Write(" ");
+            }
         }
     }
 }
