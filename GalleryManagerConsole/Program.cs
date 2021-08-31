@@ -117,7 +117,7 @@ namespace GalleryManagerConsole {
             if (storage.Setup())
                 Console.WriteLine("Storage setup successful!");
             else {
-                Console.WriteLine("You fucked up something and storage setup failed.");
+                Console.WriteLine("You broke something and storage setup failed.");
                 Console.ReadKey();
                 return;
             }
