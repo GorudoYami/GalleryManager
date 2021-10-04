@@ -17,8 +17,8 @@ namespace GalleryManagerConsole.ConsoleMenu {
         public List<MenuItem> Items { get; set; }
         public bool Choice { get; set; }
 
-        private System.Timers.Timer updateTimer;
-        private Mutex mtx;
+        private readonly System.Timers.Timer updateTimer;
+        private readonly Mutex mtx;
         private int Width { get; set; }
         private int Height { get; set; }
 
@@ -162,7 +162,7 @@ namespace GalleryManagerConsole.ConsoleMenu {
             Height = Console.WindowHeight;
             int optLength = Width / 3;
             int boxWidth = optLength + 2;
-            int boxHeight = msg.Length / optLength;
+            int boxHeight = msg.Length / optLength + 2;
 
             for (int i = 0; i < boxHeight - 2; i++) {
                 int y = Height / 7;
@@ -171,6 +171,7 @@ namespace GalleryManagerConsole.ConsoleMenu {
                 for (int q = 0; q < optLength + 2; q++)
                     Console.Write(" ");
             }
+            mtx.ReleaseMutex();
         }
     }
 }
