@@ -164,13 +164,16 @@ namespace GalleryManagerConsole.ConsoleMenu {
             int boxWidth = optLength + 2;
             int boxHeight = msg.Length / optLength + 2;
 
-            for (int i = 0; i < boxHeight - 2; i++) {
+            for (int i = 0; i < boxHeight; i++) {
                 int y = Height / 7;
-                int x = (Width / 2) - ((optLength + 2) / 2);
+                int x = (Width / 2) - (boxWidth / 2);
                 Console.SetCursorPosition(x, y);
-                for (int q = 0; q < optLength + 2; q++)
+
+                for (int q = 0; q < boxWidth; q++)
                     Console.Write(" ");
             }
+
+
             mtx.ReleaseMutex();
         }
     }
