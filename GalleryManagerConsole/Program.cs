@@ -115,20 +115,20 @@ namespace GalleryManagerConsole {
 
             storage = new DatabaseStorage(connectionInfo, galleryPath);
             if (storage.Setup())
-                Console.WriteLine("Storage setup successful!");
+                menu.ShowMessage("Storage setup successful!");
             else {
-                Console.WriteLine("You broke something and storage setup failed.");
+                menu.ShowMessage("You broke something and storage setup failed.");
                 Console.ReadKey();
                 return;
             }
 
             // Setup indexer
-            indexer = new Indexer(storage, galleryPath);
-            Console.WriteLine("Indexer initialized.");
+            indexer = new Indexer(storage, galleryPath, menu);
+            menu.ShowMessage("Indexer initialized.");
 
             // Setup importer
             importer = new Importer(storage, galleryPath);
-            Console.WriteLine("Importer initialized.");
+            menu.ShowMessage("Importer initialized.");
             Thread.Sleep(1500);
 
             mainMenu = new Menu() {
@@ -143,186 +143,6 @@ namespace GalleryManagerConsole {
             });
 
             mainMenu.Show();
-
-            // Handle commands
-            bool exit = false;
-            while (!exit) {
-                string[] cmd = Console.ReadLine().Split(' ');
-                switch (cmd[0].ToUpper()) {
-                    case "EXIT":
-                    case "QUIT":
-                        exit = true;
-                        break;
-                    case "INDEXER":
-                        if (cmd.Length > 1) {
-                            switch (cmd[1].ToUpper()) {
-                                case "START":
-                                    indexer.Start();
-                                    Console.WriteLine("Indexer started!");
-                                    break;
-                                case "STOP":
-                                    indexer.Stop();
-                                    Console.WriteLine("Indexer stopped!");
-                                    break;
-                                case "STATUS":
-                                    Console.WriteLine("Indexer is now " + (indexer.Working ? "ACTIVE" : "INACTIVE"));
-                                    if (indexer.Working) {
-                                        Console.WriteLine("Total files to index: " + indexer.FileCount);
-                                        Console.WriteLine("Files indexed: " + indexer.FilesIndexed);
-                                        Console.WriteLine("Indexed percent: " + (indexer.FilesIndexed / indexer.FileCount * 100.0));
-                                    }
-                                    break;
-                                default:
-                                    Console.WriteLine("Unknown argument!");
-                                    break;
-                            }
-                        }
-                        else
-                            Console.WriteLine("Too few arguments!");
-                        break;
-                    case "IMPORTER":
-                        if (cmd.Length > 1) {
-                            switch (cmd[1].ToUpper()) {
-                                case "DRIVE":
-                                    if (cmd.Length > 2) {
-                                        switch(cmd[2].ToUpper()) {
-                                            case "ADD": {
-                                                if (cmd.Length > 3) {
-                                                    if (uint.TryParse(cmd[3], out uint index)) {
-                                                        importer.AddDrive(driveList[(int)index]);
-                                                        Console.WriteLine("Drive '" + driveList[(int)index].Name + "' has been added!");
-                                                    }
-                                                    else
-                                                        Console.WriteLine("Invalid drive ID!");
-                                                }
-                                                break;
-                                            }
-                                            case "REMOVE": {
-                                                if (uint.TryParse(cmd[3], out uint index)) {
-                                                    await importer.RemoveDriveAsync(driveList[(int)index]);
-                                                    Console.WriteLine("Drive '" + driveList[(int)index].Name + "' has been removed!");
-                                                }
-                                                else
-                                                    Console.WriteLine("Invalid drive id!");
-                                                break;
-                                            }
-                                            case "LIST":
-                                                UpdateDrives(null, null);
-                                                Console.WriteLine("Available drives:");
-                                                foreach (DriveInfo drive in driveList) {
-                                                    Console.Write(driveList.IndexOf(drive) + " | Path: " + drive.Name + " ");
-                                                    Console.WriteLine();
-                                                }
-                                                Console.WriteLine("Drives being processed:");
-                                                foreach (DriveInfo drive in driveList) {
-                                                    if (importer.IsAdded(drive)) {
-                                                        Console.Write(driveList.IndexOf(drive) + " | Path: " + drive.Name + " ");
-                                                        Console.WriteLine();
-                                                    }
-                                                }
-                                                break;
-                                            default:
-                                                Console.WriteLine("Unknown argument: '" + cmd[2] + "'");
-                                                break;
-                                        }
-                                    }
-                                    else
-                                        Console.WriteLine("Too few arguments!");
-                                    break;
-                                case "DIRECTORY":
-                                    if (cmd.Length > 2) {
-                                        switch (cmd[2].ToUpper()) {
-                                            case "ADD":
-                                                if (cmd.Length > 3) {
-                                                    if (Directory.Exists(cmd[3])) {
-                                                        importer.AddDirectory(new DirectoryInfo(cmd[3]));
-                                                        Console.WriteLine("Directory '" + cmd[3] + "' has been added!");
-                                                    }
-                                                    else
-                                                        Console.WriteLine("Directory doesn't exist!");
-                                                }
-                                                break;
-                                            case "REMOVE":
-                                                if (cmd.Length > 3) {
-                                                    if (Directory.Exists(cmd[3]) && importer.IsAdded(new DirectoryInfo(cmd[3]))) {
-                                                        await importer.RemoveDirectoryAsync(new DirectoryInfo(cmd[3]));
-                                                        Console.WriteLine("Directory '" + cmd[3] + "' has been removed!");
-                                                    }
-                                                }
-                                                break;
-                                            default:
-                                                Console.WriteLine("Unknown argument: '" + cmd[2] + "'");
-                                                break;
-                                        }
-                                    }
-                                    else
-                                        Console.WriteLine("Too few arguments!");
-                                    break;
-                                case "REMOVEALL":
-                                    importer.RemoveAll();
-                                    Console.WriteLine("Aborted all imports!");
-                                    break;
-                                case "STATUS":
-                                    UpdateDrives(null, null);
-                                    Console.WriteLine("Available drives:");
-                                    foreach (DriveInfo drive in driveList) { 
-                                        Console.Write(driveList.IndexOf(drive) + " | Mount point: " + drive.Name + " ");
-                                        //Console.Write("Size: " + drive.TotalSize / 1073741824 + "GB ");
-                                        //Console.Write("Used: " + (drive.TotalSize - drive.TotalFreeSpace) / 1073741824.0 + " GB (" + (drive.TotalSize - drive.TotalFreeSpace) / drive.TotalSize * 100.0 + "%)");
-                                        Console.WriteLine();
-                                    }
-                                    Console.WriteLine("Drives being processed:");
-                                    foreach (DriveInfo drive in driveList) {
-                                        if (importer.IsAdded(drive)) {
-                                            Console.Write(driveList.IndexOf(drive) + " | Mount point: " + drive.Name + " ");
-                                            //Console.Write("Size: " + drive.TotalSize / 1073741824 + "GB ");
-                                            //Console.Write("Used: " + (drive.TotalSize - drive.TotalFreeSpace) / 1073741824.0 + " GB (" + (drive.TotalSize - drive.TotalFreeSpace) / drive.TotalSize * 100.0 + "%)");
-                                            Console.WriteLine();
-                                        }
-                                    }
-                                    break;
-                                case "START":
-                                    if (await importer.ImportReadyAsync()) {
-                                        Console.WriteLine("Beginning importing process...");
-                                        importer.StartImport();
-                                        break;
-                                    }
-                                    else {
-                                        Console.WriteLine("Imports are not ready yet!");
-                                        break;
-                                    }
-                                default:
-                                    Console.WriteLine("Unknown argument!");
-                                    break;
-                            }
-                        }
-                        else
-                            Console.WriteLine("Too few arguments!");
-                        break;
-                    case "CLEANUP":
-                        Console.WriteLine("Starting cleanup process...");
-                        if (!await storage.Cleanup())
-                            Console.WriteLine("Cleanup failed!");
-                        break;
-                    case "CLEAR":
-                        Console.Clear();
-                        break;
-                    case "HELP":
-                        Console.WriteLine("Available commands:");
-                        Console.WriteLine("INDEXER START/STOP/STATUS");
-                        Console.WriteLine("IMPORTER DRIVE ADD/REMOVE/LIST");
-                        Console.WriteLine("IMPORTER DIRECTORY ADD/REMOVE");
-                        Console.WriteLine("IMPORTER START/STATUS/REMOVEALL");
-                        Console.WriteLine("CLEANUP");
-                        Console.WriteLine("EXIT/QUIT");
-                        Console.WriteLine("CLEAR");
-                        Console.WriteLine("HELP");
-                        break;
-                    default:
-                        Console.WriteLine("Unknown command. Type \"help\" for command list.");
-                        break;
-                }
-            }
 
             // Cleanup
             if (indexer.Working)

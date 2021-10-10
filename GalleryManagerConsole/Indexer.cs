@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using GalleryManagerConsole.Storage;
 using GalleryManagerConsole.Types;
+using GalleryManagerConsole.ConsoleMenu;
 
 namespace GalleryManagerConsole {
     public class Indexer {
@@ -23,10 +24,12 @@ namespace GalleryManagerConsole {
         private Task task;
         private CancellationTokenSource tokenSource;
         private readonly string galleryPath;
+        private readonly Menu menu;
 
-        public Indexer(IStorage storage, string galleryPath) {
+        public Indexer(IStorage storage, string galleryPath, Menu menu) {
             this.storage = storage;
             this.galleryPath = galleryPath.Replace("\\", "/");
+            this.menu = menu;
             filesCount = 0;
             filesIndexed = 0;
         }
@@ -55,8 +58,8 @@ namespace GalleryManagerConsole {
                 files = root.GetFiles("*.*", SearchOption.AllDirectories);
             }
             catch (Exception e) {
-                Console.WriteLine(e.GetType());
-                Console.WriteLine(e.Message);
+                menu.ShowMessage(e.GetType().ToString());
+                menu.ShowMessage(e.Message);
                 working = false;
                 return;
             }
@@ -93,8 +96,8 @@ namespace GalleryManagerConsole {
                     file.Close();
                 }
                 catch (Exception e) {
-                    Console.WriteLine(e.GetType());
-                    Console.WriteLine(e.Message);
+                    menu.ShowMessage(e.GetType().ToString());
+                    menu.ShowMessage(e.Message);
                     working = false;
                     return;
                 }
@@ -105,8 +108,8 @@ namespace GalleryManagerConsole {
                 else if (Media.IsVideo(media))
                     storage.AddVideo(media);
             }
-            Console.WriteLine("Indexer finished work:");
-            Console.WriteLine("Files indexed: " + FilesIndexed);
+            menu.ShowMessage("Indexer finished work:");
+            menu.ShowMessage("Files indexed: " + FilesIndexed);
             working = false;
         }
     }

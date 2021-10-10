@@ -99,6 +99,9 @@ namespace GalleryManagerConsole.ConsoleMenu {
             Console.SetCursorPosition(0, 0);
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("Press ESC to exit");
+            Console.SetCursorPosition(0, 1);
+            Console.Write("Press ENTER to start input");
+
             Width = Console.WindowWidth;
             Height = Console.WindowHeight;
 
@@ -158,21 +161,45 @@ namespace GalleryManagerConsole.ConsoleMenu {
             mtx.WaitOne();
             Console.BackgroundColor = ConsoleColor.Blue;
             Console.ForegroundColor = ConsoleColor.Green;
+
             Width = Console.WindowWidth;
             Height = Console.WindowHeight;
+
             int optLength = Width / 3;
-            int boxWidth = optLength + 2;
+            int boxWidth = optLength + 4;
             int boxHeight = msg.Length / optLength + 2;
+            if (msg.Length % optLength != 0)
+                boxHeight++;
+
+            int x, y;
+
+            string[] msgArr = msg.Split(" ");
 
             for (int i = 0; i < boxHeight; i++) {
-                int y = Height / 7;
-                int x = (Width / 2) - (boxWidth / 2);
-                Console.SetCursorPosition(x, y);
+                y = Height / 7 + i;
 
-                for (int q = 0; q < boxWidth; q++)
+                for (int q = 0; q < boxWidth; q++) {
+                    x = (Width / 2) - (boxWidth / 2) + q;
+                    Console.SetCursorPosition(x, y);
                     Console.Write(" ");
+                }
             }
 
+            x = (Width / 2) - (boxWidth / 2) + 2;
+            y = Height / 7 + 1;
+            int lineLength = 0;
+            Console.SetCursorPosition(x, y);
+            for (int i = 0; i < msgArr.Length; i++) {
+                if (lineLength + msgArr[i].Length > optLength) {
+                    y++;
+                    Console.SetCursorPosition(x, y);
+                    lineLength = 0;
+                }
+
+                Console.Write(msgArr[i]);
+                Console.Write(" ");
+                lineLength += msgArr.Length + 1;
+            }
 
             mtx.ReleaseMutex();
         }
