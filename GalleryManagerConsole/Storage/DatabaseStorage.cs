@@ -10,14 +10,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using GalleryManagerConsole.ConsoleMenu;
+
 namespace GalleryManagerConsole.Storage {
     public class DatabaseStorage : IStorage {
         private readonly ConnectionInfo connectionInfo;
         // |R| public string ConnectionString { get; set; }
         private readonly List<string> sql;
         private readonly string galleryPath;
+        private readonly Menu menu;
 
-        public DatabaseStorage(ConnectionInfo connectionInfo, string galleryPath) {
+        public DatabaseStorage(ConnectionInfo connectionInfo, string galleryPath, Menu menu) {
             // |R| CreateConnectionString(info);
             sql = new List<string>();
             using (var reader = new StreamReader("SQL/albums.sql"))
@@ -34,12 +37,13 @@ namespace GalleryManagerConsole.Storage {
 
             this.galleryPath = galleryPath;
             this.connectionInfo = connectionInfo;
+            this.menu = menu;
         }
 
         private DbConnection GetConnection() =>
             (connectionInfo.Type == ConnectionType.MySQL) ? new MySqlConnection(connectionInfo.ConnectionString) : new SqliteConnection("Data Source=indexes.db");
 
-        private static bool TableExists(string table, DbConnection connection) {
+        private bool TableExists(string table, DbConnection connection) {
             try {
                 using var cmd = connection.CreateCommand();
                 cmd.CommandText = "SHOW TABLES LIKE @Table";
@@ -53,8 +57,8 @@ namespace GalleryManagerConsole.Storage {
                     return false;
             }
             catch (Exception e) {
-                Console.WriteLine(e.GetType());
-                Console.WriteLine(e.Message);
+                menu.ShowMessage(e.GetType().ToString().ToString());
+                menu.ShowMessage(e.Message);
             }
             return true;
         }
@@ -141,8 +145,8 @@ namespace GalleryManagerConsole.Storage {
                 transaction.Commit();
             }
             catch (Exception e) {
-                Console.WriteLine(e.GetType());
-                Console.WriteLine(e.Message);
+                menu.ShowMessage(e.GetType().ToString());
+                menu.ShowMessage(e.Message);
                 return false;
             }
             return true;
@@ -184,8 +188,8 @@ namespace GalleryManagerConsole.Storage {
                     return false;
             }
             catch (Exception e) {
-                Console.WriteLine(e.GetType());
-                Console.WriteLine(e.Message);
+                menu.ShowMessage(e.GetType().ToString());
+                menu.ShowMessage(e.Message);
                 return false;
             }
             return true;
@@ -227,8 +231,8 @@ namespace GalleryManagerConsole.Storage {
                     return false;
             }
             catch (Exception e) {
-                Console.WriteLine(e.GetType());
-                Console.WriteLine(e.Message);
+                menu.ShowMessage(e.GetType().ToString());
+                menu.ShowMessage(e.Message);
                 return false;
             }
             return true;
@@ -266,8 +270,8 @@ namespace GalleryManagerConsole.Storage {
                     return false;
             }
             catch (Exception e) {
-                Console.WriteLine(e.GetType());
-                Console.WriteLine(e.Message);
+                menu.ShowMessage(e.GetType().ToString());
+                menu.ShowMessage(e.Message);
                 return false;
             }
             return true;
@@ -322,8 +326,8 @@ namespace GalleryManagerConsole.Storage {
                 }
             }
             catch (Exception e) {
-                Console.WriteLine(e.GetType());
-                Console.WriteLine(e.Message);
+                menu.ShowMessage(e.GetType().ToString());
+                menu.ShowMessage(e.Message);
             }
             return false;
         }
@@ -354,8 +358,8 @@ namespace GalleryManagerConsole.Storage {
                 }
             }
             catch (Exception e) {
-                Console.WriteLine(e.GetType());
-                Console.WriteLine(e.Message);
+                menu.ShowMessage(e.GetType().ToString());
+                menu.ShowMessage(e.Message);
             }
             return result;
         }
@@ -374,8 +378,8 @@ namespace GalleryManagerConsole.Storage {
                 }
             }
             catch (Exception e) {
-                Console.WriteLine(e.GetType());
-                Console.WriteLine(e.Message);
+                menu.ShowMessage(e.GetType().ToString());
+                menu.ShowMessage(e.Message);
             }
             return result;
         }
@@ -394,8 +398,8 @@ namespace GalleryManagerConsole.Storage {
                 }
             }
             catch (Exception e) {
-                Console.WriteLine(e.GetType());
-                Console.WriteLine(e.Message);
+                menu.ShowMessage(e.GetType().ToString());
+                menu.ShowMessage(e.Message);
             }
             return result;
         }
@@ -417,8 +421,8 @@ namespace GalleryManagerConsole.Storage {
                 connection.Open();
             }
             catch (Exception e) {
-                Console.WriteLine(e.GetType());
-                Console.WriteLine(e.Message);
+                menu.ShowMessage(e.GetType().ToString());
+                menu.ShowMessage(e.Message);
                 return false;
             }
 
@@ -451,8 +455,8 @@ namespace GalleryManagerConsole.Storage {
                 deletedCount += trashList.Count;
                 trashList.Clear();
             }
-            Console.WriteLine("Cleanup complete!");
-            Console.WriteLine("Deleted records: " + deletedCount);
+            menu.ShowMessage("Cleanup complete!");
+            menu.ShowMessage("Deleted records: " + deletedCount);
             return true;
         }
 
@@ -493,8 +497,8 @@ namespace GalleryManagerConsole.Storage {
                 }
             }
             catch (Exception e) {
-                Console.WriteLine(e.GetType());
-                Console.WriteLine(e.Message);
+                menu.ShowMessage(e.GetType().ToString());
+                menu.ShowMessage(e.Message);
             }
             return false;
         }

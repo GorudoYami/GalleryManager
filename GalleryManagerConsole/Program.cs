@@ -113,7 +113,7 @@ namespace GalleryManagerConsole {
             driveTimer.Interval = 5000;
             UpdateDrives(null, null);
 
-            storage = new DatabaseStorage(connectionInfo, galleryPath);
+            storage = new DatabaseStorage(connectionInfo, galleryPath, menu);
             if (storage.Setup())
                 menu.ShowMessage("Storage setup successful!");
             else {
