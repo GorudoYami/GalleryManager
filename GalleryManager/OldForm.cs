@@ -13,14 +13,14 @@ using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace GalleryManager {
-    public partial class Form : System.Windows.Forms.Form {
+    public partial class OldForm : System.Windows.Forms.Form {
         private readonly Indexer indexer;
         private readonly Importer importer;
         private IStorage storage;
         private Progress<double> indexerProgress;
         private Dictionary<string, Progress<int>> importerProgress;
 
-        public Form() {
+        public OldForm() {
             Debug.WriteLine("Initializing components");
             InitializeComponent();
             Debug.Indent();

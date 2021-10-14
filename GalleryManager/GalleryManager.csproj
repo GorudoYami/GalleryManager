@@ -141,17 +141,33 @@
       <DependentUpon>DuplicatesDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Importer.cs" />
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Types\Album.cs" />
     <Compile Include="Types\ConnectionInfo.cs" />
     <Compile Include="Types\Media.cs" />
     <Compile Include="Storage\JsonStorage.cs" />
     <Compile Include="Storage\MySqlStorage.cs" />
     <Compile Include="Storage\SQLiteStorage.cs" />
-    <Compile Include="Form.cs">
+    <Compile Include="OldForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form.Designer.cs">
-      <DependentUpon>Form.cs</DependentUpon>
+    <Compile Include="OldForm.Designer.cs">
+      <DependentUpon>OldForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Indexer.cs" />
     <Compile Include="Program.cs" />
@@ -160,19 +176,20 @@
     <EmbeddedResource Include="DuplicatesDialog.resx">
       <DependentUpon>DuplicatesDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form.resx">
-      <DependentUpon>Form.cs</DependentUpon>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OldForm.resx">
+      <DependentUpon>OldForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -200,12 +217,37 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Icons\album-icon.png" />
-    <None Include="Icons\picture-icon.png" />
-    <None Include="Icons\video-icon.png" />
-    <None Include="Icons\add-album-icon.png" />
-    <None Include="Icons\add-album-icon-small.png" />
-    <Content Include="Notes.txt" />
+    <None Include="Icons\cog.png" />
+    <None Include="Icons\collection.png" />
+    <None Include="Icons\document-add.png" />
+    <None Include="Icons\document-download.png" />
+    <None Include="Icons\document-duplicate.png" />
+    <None Include="Icons\document-remove.png" />
+    <None Include="Icons\document-search.png" />
+    <None Include="Icons\download.png" />
+    <None Include="Icons\film.png" />
+    <None Include="Icons\folder.png" />
+    <None Include="Icons\folder-add.png" />
+    <None Include="Icons\folder-download.png" />
+    <None Include="Icons\folder-open.png" />
+    <None Include="Icons\folder-remove.png" />
+    <None Include="Icons\information-circle.png" />
+    <None Include="Icons\menu.png" />
+    <None Include="Icons\menu-alt-2.png" />
+    <None Include="Icons\menu-alt-4.png" />
+    <None Include="Icons\minus.png" />
+    <None Include="Icons\minus-sm.png" />
+    <None Include="Icons\photograph.png" />
+    <None Include="Icons\question-mark-circle.png" />
+    <None Include="Icons\refresh.png" />
+    <None Include="Icons\save.png" />
+    <None Include="Icons\save-as.png" />
+    <None Include="Icons\search.png" />
+    <None Include="Icons\sort-ascending.png" />
+    <None Include="Icons\sort-descending.png" />
+    <None Include="Icons\star.png" />
+    <None Include="Icons\trash.png" />
+    <None Include="Icons\x.png" />
     <Content Include="Storage\SQL\albums.sql" />
     <Content Include="Storage\SQL\duplicated_pictures.sql" />
     <Content Include="Storage\SQL\duplicated_videos.sql" />
@@ -213,5 +255,6 @@
     <Content Include="Storage\SQL\unknowns.sql" />
     <Content Include="Storage\SQL\videos.sql" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

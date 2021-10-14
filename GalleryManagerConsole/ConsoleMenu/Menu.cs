@@ -19,6 +19,7 @@ namespace GalleryManagerConsole.ConsoleMenu {
 
         private readonly System.Timers.Timer updateTimer;
         private readonly Mutex mtx;
+
         private int Width { get; set; }
         private int Height { get; set; }
 
@@ -48,7 +49,7 @@ namespace GalleryManagerConsole.ConsoleMenu {
 
         private void Loop() {
             bool exit = false;
-            //updateTimer.Start();
+            updateTimer.Start();
             while (!exit) {
                 var key = Console.ReadKey(true).Key;
                 if (key == ConsoleKey.UpArrow) {
@@ -88,7 +89,7 @@ namespace GalleryManagerConsole.ConsoleMenu {
                 else if (key == ConsoleKey.Escape)
                     exit = true;
             }
-            //updateTimer.Stop();
+            updateTimer.Stop();
             Console.Clear();
         }
 
@@ -150,8 +151,9 @@ namespace GalleryManagerConsole.ConsoleMenu {
             mtx.ReleaseMutex();
         }
 
-        private void UpdateTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) { 
-                Update();
+        private void UpdateTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
+            if (Console.WindowHeight != Height || Console.WindowWidth != Width)
+                Draw();
         }
 
         public void Update() =>
@@ -201,7 +203,9 @@ namespace GalleryManagerConsole.ConsoleMenu {
                 lineLength += msgArr.Length + 1;
             }
 
+            Thread.Sleep(5000);
             mtx.ReleaseMutex();
+            Update();
         }
     }
 }

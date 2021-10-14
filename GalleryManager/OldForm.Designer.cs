@@ -1,6 +1,6 @@
 ﻿
 namespace GalleryManager {
-    partial class Form {
+    partial class OldForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>

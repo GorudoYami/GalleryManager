@@ -16,9 +16,9 @@ namespace GalleryManager {
             Debug.AutoFlush = true;
             Debug.WriteLine("Starting the application");
 
-            Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form());
+            Application.EnableVisualStyles();
+            Application.Run(new MainWindow());
         }
     }
 }
