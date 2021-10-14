@@ -514,6 +514,7 @@ namespace GalleryManager {
             this.contentPanel0.Name = "contentPanel0";
             this.contentPanel0.Size = new System.Drawing.Size(935, 565);
             this.contentPanel0.TabIndex = 1;
+            this.contentPanel0.Visible = false;
             // 
             // contentPanelLayout0
             // 
