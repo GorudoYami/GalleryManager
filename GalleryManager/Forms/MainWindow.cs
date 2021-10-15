@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalleryManager.Properties;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -41,6 +42,14 @@ namespace GalleryManager {
 
             // Set initial menu to collapsed
             extendedMenu = false;
+
+            treeView.ImageList = new ImageList();
+            treeView.ImageList.Images.Add(Resources.folder);
+            treeView.ImageList.Images.Add(Resources.folder_open);
+            treeView.ImageList.Images.Add(Resources.film);
+            treeView.ImageList.Images.Add(Resources.photograph);
+            treeView.ImageList.ColorDepth = ColorDepth.Depth32Bit;
+            treeView.ImageIndex = 0;
         }
 
         // Win32 API magic to allow dragging by navbar

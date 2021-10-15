@@ -13,6 +13,7 @@ namespace GalleryManager {
 
             Application.SetCompatibleTextRenderingDefault(false);
             Application.EnableVisualStyles();
+            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
             Application.Run(new MainWindow());
         }
     }

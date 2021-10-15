@@ -26,6 +26,15 @@ namespace GalleryManager {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("example2.jpg");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("2021-05", new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("example.mp4");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("2021-04", new System.Windows.Forms.TreeNode[] {
+            treeNode3});
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Media", new System.Windows.Forms.TreeNode[] {
+            treeNode2,
+            treeNode4});
             this.mainLayout = new System.Windows.Forms.TableLayoutPanel();
             this.navbarLayout = new System.Windows.Forms.TableLayoutPanel();
             this.titleLabel = new System.Windows.Forms.Label();
@@ -75,6 +84,7 @@ namespace GalleryManager {
             this.iconCopy = new System.Windows.Forms.PictureBox();
             this.iconSearch = new System.Windows.Forms.PictureBox();
             this.iconStar = new System.Windows.Forms.PictureBox();
+            this.treeView = new System.Windows.Forms.TreeView();
             this.mainLayout.SuspendLayout();
             this.navbarLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconMinimize)).BeginInit();
@@ -540,6 +550,7 @@ namespace GalleryManager {
             this.contentPanelLayout0.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.contentPanelLayout0.Controls.Add(this.infoPanel, 1, 0);
             this.contentPanelLayout0.Controls.Add(this.toolbarLayout, 0, 0);
+            this.contentPanelLayout0.Controls.Add(this.treeView, 0, 1);
             this.contentPanelLayout0.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentPanelLayout0.Location = new System.Drawing.Point(0, 0);
             this.contentPanelLayout0.Margin = new System.Windows.Forms.Padding(0);
@@ -732,9 +743,9 @@ namespace GalleryManager {
             this.previewBox.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.previewBox.Name = "previewBox";
             this.previewBox.Size = new System.Drawing.Size(280, 240);
+            this.previewBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.previewBox.TabIndex = 0;
             this.previewBox.TabStop = false;
-            this.previewBox.SizeMode = PictureBoxSizeMode.Zoom;
             // 
             // label0
             // 
@@ -804,11 +815,12 @@ namespace GalleryManager {
             // iconAddDirectory
             // 
             this.iconAddDirectory.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.iconAddDirectory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.iconAddDirectory.Image = global::GalleryManager.Properties.Resources.folder_add;
-            this.iconAddDirectory.Location = new System.Drawing.Point(6, 6);
-            this.iconAddDirectory.Margin = new System.Windows.Forms.Padding(6);
+            this.iconAddDirectory.Location = new System.Drawing.Point(8, 8);
+            this.iconAddDirectory.Margin = new System.Windows.Forms.Padding(8);
             this.iconAddDirectory.Name = "iconAddDirectory";
-            this.iconAddDirectory.Size = new System.Drawing.Size(23, 23);
+            this.iconAddDirectory.Size = new System.Drawing.Size(19, 19);
             this.iconAddDirectory.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.iconAddDirectory.TabIndex = 0;
             this.iconAddDirectory.TabStop = false;
@@ -864,6 +876,35 @@ namespace GalleryManager {
             this.iconStar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.iconStar.TabIndex = 4;
             this.iconStar.TabStop = false;
+            // 
+            // treeView
+            // 
+            this.treeView.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.treeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.treeView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView.ForeColor = System.Drawing.Color.White;
+            this.treeView.Indent = 20;
+            this.treeView.ItemHeight = 25;
+            this.treeView.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.treeView.Location = new System.Drawing.Point(10, 35);
+            this.treeView.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
+            this.treeView.Name = "treeView";
+            treeNode1.Name = "Node4";
+            treeNode1.Text = "example2.jpg";
+            treeNode2.Name = "Node1";
+            treeNode2.Text = "2021-05";
+            treeNode3.Name = "Node3";
+            treeNode3.Text = "example.mp4";
+            treeNode4.Name = "Node2";
+            treeNode4.Text = "2021-04";
+            treeNode5.Name = "Node0";
+            treeNode5.Text = "Media";
+            this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode5});
+            this.treeView.ShowLines = false;
+            this.treeView.Size = new System.Drawing.Size(615, 520);
+            this.treeView.TabIndex = 2;
             // 
             // MainWindow
             // 
@@ -970,5 +1011,6 @@ namespace GalleryManager {
         private Label label6;
         private Label labelCDate;
         private Label label5;
+        private TreeView treeView;
     }
 }
