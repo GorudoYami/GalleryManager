@@ -26,15 +26,12 @@ namespace GalleryManager {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("example2.jpg");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("2021-05", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("examplevid.mp4");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("2021-06", new System.Windows.Forms.TreeNode[] {
             treeNode1});
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("example.mp4");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("2021-04", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("examplepic.png");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("2021-05", new System.Windows.Forms.TreeNode[] {
             treeNode3});
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Media", new System.Windows.Forms.TreeNode[] {
-            treeNode2,
-            treeNode4});
             this.mainLayout = new System.Windows.Forms.TableLayoutPanel();
             this.navbarLayout = new System.Windows.Forms.TableLayoutPanel();
             this.titleLabel = new System.Windows.Forms.Label();
@@ -879,8 +876,8 @@ namespace GalleryManager {
             // 
             // treeView
             // 
-            this.treeView.BackColor = System.Drawing.SystemColors.WindowFrame;
-            this.treeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.treeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(75)))), ((int)(((byte)(75)))));
+            this.treeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.treeView.Cursor = System.Windows.Forms.Cursors.Default;
             this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView.ForeColor = System.Drawing.Color.White;
@@ -890,18 +887,17 @@ namespace GalleryManager {
             this.treeView.Location = new System.Drawing.Point(10, 35);
             this.treeView.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
             this.treeView.Name = "treeView";
-            treeNode1.Name = "Node4";
-            treeNode1.Text = "example2.jpg";
-            treeNode2.Name = "Node1";
-            treeNode2.Text = "2021-05";
-            treeNode3.Name = "Node3";
-            treeNode3.Text = "example.mp4";
-            treeNode4.Name = "Node2";
-            treeNode4.Text = "2021-04";
-            treeNode5.Name = "Node0";
-            treeNode5.Text = "Media";
+            treeNode1.Name = "Node1";
+            treeNode1.Text = "examplevid.mp4";
+            treeNode2.Name = "Node0";
+            treeNode2.Text = "2021-06";
+            treeNode3.Name = "Node2";
+            treeNode3.Text = "examplepic.png";
+            treeNode4.Name = "Node5";
+            treeNode4.Text = "2021-05";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode5});
+            treeNode2,
+            treeNode4});
             this.treeView.ShowLines = false;
             this.treeView.Size = new System.Drawing.Size(615, 520);
             this.treeView.TabIndex = 2;
@@ -914,6 +910,7 @@ namespace GalleryManager {
             this.ClientSize = new System.Drawing.Size(1000, 600);
             this.ControlBox = false;
             this.Controls.Add(this.mainLayout);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
