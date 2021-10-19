@@ -26,14 +26,14 @@ namespace GalleryManager {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("examplevid.mp4");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("2021-06", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("examplepic.png");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("2021-05", new System.Windows.Forms.TreeNode[] {
-            treeNode3});
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("examplevid.mp4");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("2021-06", new System.Windows.Forms.TreeNode[] {
+            treeNode5});
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("examplepic.png");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("2021-05", new System.Windows.Forms.TreeNode[] {
+            treeNode7});
             this.mainLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.navbarLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.titlebarLayout = new System.Windows.Forms.TableLayoutPanel();
             this.titleLabel = new System.Windows.Forms.Label();
             this.iconMinimize = new System.Windows.Forms.PictureBox();
             this.iconMaximize = new System.Windows.Forms.PictureBox();
@@ -48,7 +48,6 @@ namespace GalleryManager {
             this.duplicatesIcon = new System.Windows.Forms.PictureBox();
             this.importIconPanel = new System.Windows.Forms.Panel();
             this.importIcon = new System.Windows.Forms.PictureBox();
-            this.collectionLabel = new System.Windows.Forms.Label();
             this.importLabel = new System.Windows.Forms.Label();
             this.duplicatesLabel = new System.Windows.Forms.Label();
             this.optionsLabel = new System.Windows.Forms.Label();
@@ -63,12 +62,12 @@ namespace GalleryManager {
             this.infoPanelLayout = new System.Windows.Forms.TableLayoutPanel();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.labelCDate = new System.Windows.Forms.Label();
+            this.cdateLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.labelLength = new System.Windows.Forms.Label();
-            this.labelSize = new System.Windows.Forms.Label();
-            this.labelType = new System.Windows.Forms.Label();
-            this.labelName = new System.Windows.Forms.Label();
+            this.lengthLabel = new System.Windows.Forms.Label();
+            this.sizeLabel = new System.Windows.Forms.Label();
+            this.typeLabel = new System.Windows.Forms.Label();
+            this.nameLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.previewBox = new System.Windows.Forms.PictureBox();
@@ -82,8 +81,11 @@ namespace GalleryManager {
             this.iconSearch = new System.Windows.Forms.PictureBox();
             this.iconStar = new System.Windows.Forms.PictureBox();
             this.treeView = new System.Windows.Forms.TreeView();
+            this.contentPanel3 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.collectionLabel = new System.Windows.Forms.Label();
             this.mainLayout.SuspendLayout();
-            this.navbarLayout.SuspendLayout();
+            this.titlebarLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconMinimize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconMaximize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconClose)).BeginInit();
@@ -112,13 +114,14 @@ namespace GalleryManager {
             ((System.ComponentModel.ISupportInitialize)(this.iconCopy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconStar)).BeginInit();
+            this.contentPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainLayout
             // 
             this.mainLayout.ColumnCount = 1;
             this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.mainLayout.Controls.Add(this.navbarLayout, 0, 0);
+            this.mainLayout.Controls.Add(this.titlebarLayout, 0, 0);
             this.mainLayout.Controls.Add(this.contentLayout, 0, 1);
             this.mainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainLayout.Location = new System.Drawing.Point(0, 0);
@@ -130,27 +133,27 @@ namespace GalleryManager {
             this.mainLayout.Size = new System.Drawing.Size(1000, 600);
             this.mainLayout.TabIndex = 0;
             // 
-            // navbarLayout
+            // titlebarLayout
             // 
-            this.navbarLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
-            this.navbarLayout.ColumnCount = 4;
-            this.navbarLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.navbarLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.navbarLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.navbarLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.navbarLayout.Controls.Add(this.titleLabel, 0, 0);
-            this.navbarLayout.Controls.Add(this.iconMinimize, 1, 0);
-            this.navbarLayout.Controls.Add(this.iconMaximize, 2, 0);
-            this.navbarLayout.Controls.Add(this.iconClose, 3, 0);
-            this.navbarLayout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.navbarLayout.Location = new System.Drawing.Point(0, 0);
-            this.navbarLayout.Margin = new System.Windows.Forms.Padding(0);
-            this.navbarLayout.Name = "navbarLayout";
-            this.navbarLayout.RowCount = 1;
-            this.navbarLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.navbarLayout.Size = new System.Drawing.Size(1000, 35);
-            this.navbarLayout.TabIndex = 0;
-            this.navbarLayout.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Navbar_MouseDown);
+            this.titlebarLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
+            this.titlebarLayout.ColumnCount = 4;
+            this.titlebarLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.titlebarLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.titlebarLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.titlebarLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.titlebarLayout.Controls.Add(this.titleLabel, 0, 0);
+            this.titlebarLayout.Controls.Add(this.iconMinimize, 1, 0);
+            this.titlebarLayout.Controls.Add(this.iconMaximize, 2, 0);
+            this.titlebarLayout.Controls.Add(this.iconClose, 3, 0);
+            this.titlebarLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.titlebarLayout.Location = new System.Drawing.Point(0, 0);
+            this.titlebarLayout.Margin = new System.Windows.Forms.Padding(0);
+            this.titlebarLayout.Name = "titlebarLayout";
+            this.titlebarLayout.RowCount = 1;
+            this.titlebarLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.titlebarLayout.Size = new System.Drawing.Size(1000, 35);
+            this.titlebarLayout.TabIndex = 0;
+            this.titlebarLayout.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Navbar_MouseDown);
             // 
             // titleLabel
             // 
@@ -216,7 +219,7 @@ namespace GalleryManager {
             this.contentLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.contentLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.contentLayout.Controls.Add(this.menuLayout, 0, 0);
-            this.contentLayout.Controls.Add(this.contentPanel0, 1, 0);
+            this.contentLayout.Controls.Add(this.contentPanel3, 1, 0);
             this.contentLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentLayout.Location = new System.Drawing.Point(0, 35);
             this.contentLayout.Margin = new System.Windows.Forms.Padding(0);
@@ -382,30 +385,12 @@ namespace GalleryManager {
             this.importIcon.MouseEnter += new System.EventHandler(this.Menu_MouseEnter);
             this.importIcon.MouseLeave += new System.EventHandler(this.Menu_MouseLeave);
             // 
-            // collectionLabel
-            // 
-            this.collectionLabel.AutoSize = true;
-            this.collectionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.collectionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.collectionLabel.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
-            this.collectionLabel.Location = new System.Drawing.Point(65, 65);
-            this.collectionLabel.Margin = new System.Windows.Forms.Padding(0);
-            this.collectionLabel.Name = "collectionLabel";
-            this.collectionLabel.Size = new System.Drawing.Size(135, 65);
-            this.collectionLabel.TabIndex = 9;
-            this.collectionLabel.Tag = "0";
-            this.collectionLabel.Text = "Collection";
-            this.collectionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.collectionLabel.Click += new System.EventHandler(this.Menu_Click);
-            this.collectionLabel.MouseEnter += new System.EventHandler(this.Menu_MouseEnter);
-            this.collectionLabel.MouseLeave += new System.EventHandler(this.Menu_MouseLeave);
-            // 
             // importLabel
             // 
             this.importLabel.AutoSize = true;
             this.importLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.importLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.importLabel.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.importLabel.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.importLabel.Location = new System.Drawing.Point(65, 130);
             this.importLabel.Margin = new System.Windows.Forms.Padding(0);
             this.importLabel.Name = "importLabel";
@@ -534,11 +519,13 @@ namespace GalleryManager {
             // 
             this.contentPanel0.Controls.Add(this.contentPanelLayout0);
             this.contentPanel0.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.contentPanel0.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.contentPanel0.Location = new System.Drawing.Point(65, 0);
             this.contentPanel0.Margin = new System.Windows.Forms.Padding(0);
             this.contentPanel0.Name = "contentPanel0";
             this.contentPanel0.Size = new System.Drawing.Size(935, 565);
             this.contentPanel0.TabIndex = 1;
+            this.contentPanel0.Visible = false;
             // 
             // contentPanelLayout0
             // 
@@ -549,6 +536,7 @@ namespace GalleryManager {
             this.contentPanelLayout0.Controls.Add(this.toolbarLayout, 0, 0);
             this.contentPanelLayout0.Controls.Add(this.treeView, 0, 1);
             this.contentPanelLayout0.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.contentPanelLayout0.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.contentPanelLayout0.Location = new System.Drawing.Point(0, 0);
             this.contentPanelLayout0.Margin = new System.Windows.Forms.Padding(0);
             this.contentPanelLayout0.Name = "contentPanelLayout0";
@@ -578,12 +566,12 @@ namespace GalleryManager {
             this.infoPanelLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.infoPanelLayout.Controls.Add(this.label7, 1, 7);
             this.infoPanelLayout.Controls.Add(this.label6, 0, 7);
-            this.infoPanelLayout.Controls.Add(this.labelCDate, 1, 6);
+            this.infoPanelLayout.Controls.Add(this.cdateLabel, 1, 6);
             this.infoPanelLayout.Controls.Add(this.label5, 0, 6);
-            this.infoPanelLayout.Controls.Add(this.labelLength, 1, 5);
-            this.infoPanelLayout.Controls.Add(this.labelSize, 1, 4);
-            this.infoPanelLayout.Controls.Add(this.labelType, 1, 3);
-            this.infoPanelLayout.Controls.Add(this.labelName, 1, 2);
+            this.infoPanelLayout.Controls.Add(this.lengthLabel, 1, 5);
+            this.infoPanelLayout.Controls.Add(this.sizeLabel, 1, 4);
+            this.infoPanelLayout.Controls.Add(this.typeLabel, 1, 3);
+            this.infoPanelLayout.Controls.Add(this.nameLabel, 1, 2);
             this.infoPanelLayout.Controls.Add(this.label4, 0, 5);
             this.infoPanelLayout.Controls.Add(this.label3, 0, 4);
             this.infoPanelLayout.Controls.Add(this.previewBox, 0, 1);
@@ -633,17 +621,17 @@ namespace GalleryManager {
             this.label6.Text = "Modification date:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelCDate
+            // cdateLabel
             // 
-            this.labelCDate.AutoSize = true;
-            this.labelCDate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelCDate.Location = new System.Drawing.Point(150, 435);
-            this.labelCDate.Margin = new System.Windows.Forms.Padding(0);
-            this.labelCDate.Name = "labelCDate";
-            this.labelCDate.Size = new System.Drawing.Size(140, 35);
-            this.labelCDate.TabIndex = 11;
-            this.labelCDate.Text = "14.08.2020";
-            this.labelCDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cdateLabel.AutoSize = true;
+            this.cdateLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cdateLabel.Location = new System.Drawing.Point(150, 435);
+            this.cdateLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.cdateLabel.Name = "cdateLabel";
+            this.cdateLabel.Size = new System.Drawing.Size(140, 35);
+            this.cdateLabel.TabIndex = 11;
+            this.cdateLabel.Text = "14.08.2020";
+            this.cdateLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label5
             // 
@@ -658,53 +646,53 @@ namespace GalleryManager {
             this.label5.Text = "Creation date:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelLength
+            // lengthLabel
             // 
-            this.labelLength.AutoSize = true;
-            this.labelLength.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelLength.Location = new System.Drawing.Point(150, 400);
-            this.labelLength.Margin = new System.Windows.Forms.Padding(0);
-            this.labelLength.Name = "labelLength";
-            this.labelLength.Size = new System.Drawing.Size(140, 35);
-            this.labelLength.TabIndex = 9;
-            this.labelLength.Text = "00:00:00";
-            this.labelLength.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lengthLabel.AutoSize = true;
+            this.lengthLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lengthLabel.Location = new System.Drawing.Point(150, 400);
+            this.lengthLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.lengthLabel.Name = "lengthLabel";
+            this.lengthLabel.Size = new System.Drawing.Size(140, 35);
+            this.lengthLabel.TabIndex = 9;
+            this.lengthLabel.Text = "00:00:00";
+            this.lengthLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // labelSize
+            // sizeLabel
             // 
-            this.labelSize.AutoSize = true;
-            this.labelSize.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelSize.Location = new System.Drawing.Point(150, 365);
-            this.labelSize.Margin = new System.Windows.Forms.Padding(0);
-            this.labelSize.Name = "labelSize";
-            this.labelSize.Size = new System.Drawing.Size(140, 35);
-            this.labelSize.TabIndex = 8;
-            this.labelSize.Text = "104 MB";
-            this.labelSize.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.sizeLabel.AutoSize = true;
+            this.sizeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sizeLabel.Location = new System.Drawing.Point(150, 365);
+            this.sizeLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.sizeLabel.Name = "sizeLabel";
+            this.sizeLabel.Size = new System.Drawing.Size(140, 35);
+            this.sizeLabel.TabIndex = 8;
+            this.sizeLabel.Text = "104 MB";
+            this.sizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // labelType
+            // typeLabel
             // 
-            this.labelType.AutoSize = true;
-            this.labelType.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelType.Location = new System.Drawing.Point(150, 330);
-            this.labelType.Margin = new System.Windows.Forms.Padding(0);
-            this.labelType.Name = "labelType";
-            this.labelType.Size = new System.Drawing.Size(140, 35);
-            this.labelType.TabIndex = 7;
-            this.labelType.Text = "MP4 Video";
-            this.labelType.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.typeLabel.AutoSize = true;
+            this.typeLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.typeLabel.Location = new System.Drawing.Point(150, 330);
+            this.typeLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.typeLabel.Name = "typeLabel";
+            this.typeLabel.Size = new System.Drawing.Size(140, 35);
+            this.typeLabel.TabIndex = 7;
+            this.typeLabel.Text = "MP4 Video";
+            this.typeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // labelName
+            // nameLabel
             // 
-            this.labelName.AutoSize = true;
-            this.labelName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelName.Location = new System.Drawing.Point(150, 295);
-            this.labelName.Margin = new System.Windows.Forms.Padding(0);
-            this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(140, 35);
-            this.labelName.TabIndex = 6;
-            this.labelName.Text = "example.mp4";
-            this.labelName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.nameLabel.AutoSize = true;
+            this.nameLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nameLabel.Location = new System.Drawing.Point(150, 295);
+            this.nameLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(140, 35);
+            this.nameLabel.TabIndex = 6;
+            this.nameLabel.Text = "example.mp4";
+            this.nameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label4
             // 
@@ -887,20 +875,71 @@ namespace GalleryManager {
             this.treeView.Location = new System.Drawing.Point(10, 35);
             this.treeView.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
             this.treeView.Name = "treeView";
-            treeNode1.Name = "Node1";
-            treeNode1.Text = "examplevid.mp4";
-            treeNode2.Name = "Node0";
-            treeNode2.Text = "2021-06";
-            treeNode3.Name = "Node2";
-            treeNode3.Text = "examplepic.png";
-            treeNode4.Name = "Node5";
-            treeNode4.Text = "2021-05";
+            treeNode5.Name = "Node1";
+            treeNode5.Text = "examplevid.mp4";
+            treeNode6.Name = "Node0";
+            treeNode6.Text = "2021-06";
+            treeNode7.Name = "Node2";
+            treeNode7.Text = "examplepic.png";
+            treeNode8.Name = "Node5";
+            treeNode8.Text = "2021-05";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2,
-            treeNode4});
+            treeNode6,
+            treeNode8});
             this.treeView.ShowLines = false;
             this.treeView.Size = new System.Drawing.Size(615, 520);
             this.treeView.TabIndex = 2;
+            // 
+            // contentPanel3
+            // 
+            this.contentPanel3.Controls.Add(this.tableLayoutPanel1);
+            this.contentPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.contentPanel3.Location = new System.Drawing.Point(65, 0);
+            this.contentPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.contentPanel3.Name = "contentPanel3";
+            this.contentPanel3.Size = new System.Drawing.Size(935, 565);
+            this.contentPanel3.TabIndex = 1;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 10;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(935, 565);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // collectionLabel
+            // 
+            this.collectionLabel.AutoSize = true;
+            this.collectionLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.collectionLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.collectionLabel.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.collectionLabel.Location = new System.Drawing.Point(65, 65);
+            this.collectionLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.collectionLabel.Name = "collectionLabel";
+            this.collectionLabel.Size = new System.Drawing.Size(135, 65);
+            this.collectionLabel.TabIndex = 9;
+            this.collectionLabel.Tag = "0";
+            this.collectionLabel.Text = "Collection";
+            this.collectionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.collectionLabel.Click += new System.EventHandler(this.Menu_Click);
+            this.collectionLabel.MouseEnter += new System.EventHandler(this.Menu_MouseEnter);
+            this.collectionLabel.MouseLeave += new System.EventHandler(this.Menu_MouseLeave);
             // 
             // MainWindow
             // 
@@ -920,8 +959,8 @@ namespace GalleryManager {
             this.ShowIcon = false;
             this.Text = "MainWindow";
             this.mainLayout.ResumeLayout(false);
-            this.navbarLayout.ResumeLayout(false);
-            this.navbarLayout.PerformLayout();
+            this.titlebarLayout.ResumeLayout(false);
+            this.titlebarLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iconMinimize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconMaximize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconClose)).EndInit();
@@ -953,6 +992,7 @@ namespace GalleryManager {
             ((System.ComponentModel.ISupportInitialize)(this.iconCopy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconSearch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconStar)).EndInit();
+            this.contentPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -960,7 +1000,7 @@ namespace GalleryManager {
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel mainLayout;
-        private System.Windows.Forms.TableLayoutPanel navbarLayout;
+        private System.Windows.Forms.TableLayoutPanel titlebarLayout;
         private System.Windows.Forms.Label titleLabel;
         private System.Windows.Forms.PictureBox iconMinimize;
         private PictureBox iconMaximize;
@@ -978,7 +1018,6 @@ namespace GalleryManager {
         private PictureBox importIcon;
         private PictureBox menuIcon;
         private PictureBox collectionIcon;
-        private Label collectionLabel;
         private Label importLabel;
         private Label duplicatesLabel;
         private Label optionsLabel;
@@ -998,16 +1037,19 @@ namespace GalleryManager {
         private Label label0;
         private Label label1;
         private Label label2;
-        private Label labelType;
-        private Label labelName;
+        private Label typeLabel;
+        private Label nameLabel;
         private Label label4;
         private Label label3;
-        private Label labelSize;
-        private Label labelLength;
+        private Label sizeLabel;
+        private Label lengthLabel;
         private Label label7;
         private Label label6;
-        private Label labelCDate;
+        private Label cdateLabel;
         private Label label5;
         private TreeView treeView;
+        private Panel contentPanel3;
+        private Label collectionLabel;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }

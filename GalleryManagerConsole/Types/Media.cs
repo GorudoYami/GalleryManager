@@ -1,6 +1,12 @@
 ﻿using System.IO;
 
 namespace GalleryManagerConsole.Types {
+    public enum MediaType {
+        Video,
+        Picture,
+        Unknown
+    }
+
     public class Media {
         public ulong ID { get; set; }
         public string Path { get; set; }
@@ -9,6 +15,7 @@ namespace GalleryManagerConsole.Types {
         public string Format { get; set; }
         public ulong Size { get; set; }
         public string Hash { get; set; }
+        public MediaType Type { get; set; }
         public static bool IsVideo(FileInfo file) {
             switch (file.Extension.ToUpper()) {
                 case ".MP4":
