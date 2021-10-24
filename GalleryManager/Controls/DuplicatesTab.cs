@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GalleryManager.Controls {
-    public partial class CustomTabMenu : UserControl {
-        public CustomTabMenu() {
+    public partial class DuplicatesTab : UserControl {
+        public DuplicatesTab() {
             InitializeComponent();
         }
     }

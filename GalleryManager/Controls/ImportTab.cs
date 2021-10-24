@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GalleryManager.Controls {
-    public partial class TabOptions : UserControl {
-        public TabOptions() {
+    public partial class ImportTab : UserControl {
+        public ImportTab() {
             InitializeComponent();
         }
     }

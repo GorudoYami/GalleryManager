@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GalleryManager.Controls {
-    public partial class TabCollection : UserControl {
-        public TabCollection() {
+    public partial class CollectionTab : UserControl {
+        public CollectionTab() {
             InitializeComponent();
         }
     }
