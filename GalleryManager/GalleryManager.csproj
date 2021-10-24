@@ -17,6 +17,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="backup\**" />
+    <EmbeddedResource Remove="backup\**" />
+    <None Remove="backup\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="5.0.11" />
     <PackageReference Include="MySql.Data" Version="8.0.26" />
   </ItemGroup>

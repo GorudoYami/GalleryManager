@@ -27,13 +27,13 @@ namespace GalleryManager {
             InitializeComponent();
 
             // Add controls from menu options to the list for easier handling
-            menuList = new List<Control[]> {
-                new Control[] { collectionIconPanel, collectionLabel },
-                new Control[] { importIconPanel, importLabel },
-                new Control[] { duplicatesIconPanel, duplicatesLabel },
-                new Control[] { optionsIconPanel, optionsLabel },
-                new Control[] { infoIconPanel, infoLabel }
-            };
+            //menuList = new List<Control[]> {
+            //    new Control[] { collectionIconPanel, collectionLabel },
+            //    new Control[] { importIconPanel, importLabel },
+            //    new Control[] { duplicatesIconPanel, duplicatesLabel },
+            //    new Control[] { optionsIconPanel, optionsLabel },
+            //    new Control[] { infoIconPanel, infoLabel }
+            //};
 
             // Set initial selected menu option
             activeMenuIndex = 0;
@@ -52,7 +52,7 @@ namespace GalleryManager {
             treeView.ImageIndex = 0;
         }
 
-        // Win32 API magic to allow dragging by navbar
+        // Win32 API magic to allow dragging by titlebar
         private void Navbar_MouseDown(object sender, MouseEventArgs e) {
             if (e.Button == MouseButtons.Left) {
                 ReleaseCapture();
@@ -109,16 +109,26 @@ namespace GalleryManager {
         }
 
         private void MenuIcon_Click(object sender, EventArgs e) {
-            if (extendedMenu) {
-                contentLayout.ColumnStyles[0].Width = 65F;
-                menuIcon.Image = Properties.Resources.menu;
-            }
-            else {
-                contentLayout.ColumnStyles[0].Width = 200F;
-                menuIcon.Image = Properties.Resources.menu_alt_2;
-            }
+            //if (extendedMenu) {
+            //    contentLayout.ColumnStyles[0].Width = 65F;
+            //    menuIcon.Image = Properties.Resources.menu;
+            //}
+            //else {
+            //    contentLayout.ColumnStyles[0].Width = 200F;
+            //    menuIcon.Image = Properties.Resources.menu_alt_2;
+            //}
 
-            extendedMenu = !extendedMenu;
+            //extendedMenu = !extendedMenu;
+        }
+
+        private void ButtonLabel_MouseEnter(object sender, EventArgs e) {
+            Label label = (Label)sender;
+            label.BackColor = Color.FromArgb(100, 100, 100);
+        }
+
+        private void ButtonLabel_MouseLeave(object sender, EventArgs e) {
+            Label label = (Label)sender;
+            label.BackColor = Color.FromArgb(55, 55, 55);
         }
     }
 

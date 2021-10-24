@@ -9,15 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GalleryManager.Controls {
-    public partial class IconPanel : UserControl {
-        public Image Image {
-            get { return iconPictureBox.Image; }
-            set { iconPictureBox.Image = value; }
-        }
-
-        public IconPanel() {
+    public partial class TabOptions : UserControl {
+        public TabOptions() {
             InitializeComponent();
-            iconPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
         }
     }
 }
