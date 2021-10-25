@@ -76,11 +76,12 @@ namespace GalleryManager.Controls {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
             this.Controls.Add(this.mainLayout);
+            this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.ForeColor = System.Drawing.Color.White;
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "MenuOption";
-            this.Size = new System.Drawing.Size(160, 60);
+            this.Size = new System.Drawing.Size(160, 60);;
             this.mainLayout.ResumeLayout(false);
             this.mainLayout.PerformLayout();
             this.ResumeLayout(false);

@@ -30,32 +30,17 @@ namespace GalleryManager.Controls {
             }
         }
 
-        public new event EventHandler MouseEnter {
+        public new event EventHandler DoubleClick {
             add {
-                base.MouseEnter += value;
+                base.DoubleClick += value;
                 foreach (Control control in Controls) {
-                    control.MouseEnter += value;
+                    control.DoubleClick += value;
                 }
             }
             remove {
-                base.MouseEnter -= value;
+                base.DoubleClick -= value;
                 foreach (Control control in Controls) {
-                    control.MouseEnter -= value;
-                }
-            }
-        }
-
-        public new event EventHandler MouseLeave {
-            add {
-                base.MouseLeave += value;
-                foreach (Control control in Controls) {
-                    control.MouseLeave += value;
-                }
-            }
-            remove {
-                base.MouseEnter -= value;
-                foreach (Control control in Controls) {
-                    control.MouseLeave -= value;
+                    control.DoubleClick -= value;
                 }
             }
         }

@@ -1,6 +1,5 @@
 ﻿using GalleryManagerConsole.Types;
 using Microsoft.Data.Sqlite;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using GalleryManagerConsole.ConsoleMenu;
+using MySqlConnector;
 
 namespace GalleryManagerConsole.Storage {
     public class DatabaseStorage : IStorage {
@@ -44,22 +44,17 @@ namespace GalleryManagerConsole.Storage {
             (connectionInfo.Type == ConnectionType.MySQL) ? new MySqlConnection(connectionInfo.ConnectionString) : new SqliteConnection("Data Source=indexes.db");
 
         private bool TableExists(string table, DbConnection connection) {
-            try {
-                using var cmd = connection.CreateCommand();
-                cmd.CommandText = "SHOW TABLES LIKE @Table";
+            using var cmd = connection.CreateCommand();
+            cmd.CommandText = "SHOW TABLES LIKE @Table";
 
-                cmd.Parameters.Add(cmd.CreateParameter());
-                cmd.Parameters[0].ParameterName = "@Table";
-                cmd.Parameters[0].Value = table;
+            cmd.Parameters.Add(cmd.CreateParameter());
+            cmd.Parameters[0].ParameterName = "@Table";
+            cmd.Parameters[0].Value = table;
 
-                using var reader = cmd.ExecuteReader();
-                if (!reader.HasRows)
-                    return false;
-            }
-            catch (Exception e) {
-                menu.ShowMessage(e.GetType().ToString().ToString());
-                menu.ShowMessage(e.Message);
-            }
+            using var reader = cmd.ExecuteReader();
+            if (!reader.HasRows)
+                return false;
+
             return true;
         }
 
@@ -72,11 +67,14 @@ namespace GalleryManagerConsole.Storage {
             bool createPictures = false;
             bool createUnknowns = false;
 
-            try {
+            //try {
                 connection.Open();
 
-                // Check for table "albums"
-                if (!TableExists("albums", connection))
+            //MySqlCommand setcmd = new MySqlCommand("SET character_set_results=utf8", (MySqlConnection)connection);
+            //int n = setcmd.ExecuteNonQuery();
+
+            // Check for table "albums"
+            if (!TableExists("albums", connection))
                     createAlbums = true;
 
                 // Check for table "videos"
@@ -143,12 +141,12 @@ namespace GalleryManagerConsole.Storage {
                 }
 
                 transaction.Commit();
-            }
-            catch (Exception e) {
-                menu.ShowMessage(e.GetType().ToString());
-                menu.ShowMessage(e.Message);
-                return false;
-            }
+            //}
+            //catch (Exception e) {
+                //menu.ShowMessage(e.GetType().ToString());
+                //menu.ShowMessage(e.Message);
+                //return false;
+            //}
             return true;
         }
 
@@ -158,7 +156,7 @@ namespace GalleryManagerConsole.Storage {
             using DbConnection connection = GetConnection();
             picture.Path = picture.Path.Replace("\\", "/");
             picture.RelativePath = picture.RelativePath.Replace("\\", "/");
-            try {
+            //try {
                 connection.Open();
                 using var cmd = connection.CreateCommand();
 
@@ -186,12 +184,12 @@ namespace GalleryManagerConsole.Storage {
 
                 if (cmd.ExecuteNonQuery() != 1)
                     return false;
-            }
-            catch (Exception e) {
-                menu.ShowMessage(e.GetType().ToString());
-                menu.ShowMessage(e.Message);
-                return false;
-            }
+            //}
+            //catch (Exception e) {
+                //menu.ShowMessage(e.GetType().ToString());
+               // menu.ShowMessage(e.Message);
+                //return false;
+            //}
             return true;
         }
 
@@ -201,7 +199,7 @@ namespace GalleryManagerConsole.Storage {
             using DbConnection connection = GetConnection();
             video.Path = video.Path.Replace("\\", "/");
             video.RelativePath = video.RelativePath.Replace("\\", "/");
-            try {
+            //try {
                 connection.Open();
                 using var cmd = connection.CreateCommand();
 
@@ -229,12 +227,12 @@ namespace GalleryManagerConsole.Storage {
 
                 if (cmd.ExecuteNonQuery() != 1)
                     return false;
-            }
-            catch (Exception e) {
-                menu.ShowMessage(e.GetType().ToString());
-                menu.ShowMessage(e.Message);
-                return false;
-            }
+            //}
+            //catch (Exception e) {
+                //menu.ShowMessage(e.GetType().ToString());
+                //menu.ShowMessage(e.Message);
+                //return false;
+            //}
             return true;
         }
 
@@ -243,7 +241,7 @@ namespace GalleryManagerConsole.Storage {
             using DbConnection connection = GetConnection();
             media.Path = media.Path.Replace("\\", "/");
             media.RelativePath = media.RelativePath.Replace("\\", "/");
-            try {
+            //try {
                 connection.Open();
                 using var cmd = connection.CreateCommand();
 
@@ -268,12 +266,12 @@ namespace GalleryManagerConsole.Storage {
                 int result = cmd.ExecuteNonQuery();
                 if (result == 0 || result == -1)
                     return false;
-            }
-            catch (Exception e) {
-                menu.ShowMessage(e.GetType().ToString());
-                menu.ShowMessage(e.Message);
-                return false;
-            }
+            //}
+            //catch (Exception e) {
+                //menu.ShowMessage(e.GetType().ToString());
+                //menu.ShowMessage(e.Message);
+                //return false;
+            //}
             return true;
         }
 
@@ -283,7 +281,7 @@ namespace GalleryManagerConsole.Storage {
             using var connection = GetConnection();
             media.Path = media.Path.Replace("\\", "/");
             media.RelativePath = media.RelativePath.Replace("\\", "/");
-            try {
+            //try {
                 connection.Open();
 
                 // Check in videos
@@ -324,11 +322,11 @@ namespace GalleryManagerConsole.Storage {
                     if (reader.HasRows)
                         return true;
                 }
-            }
-            catch (Exception e) {
-                menu.ShowMessage(e.GetType().ToString());
-                menu.ShowMessage(e.Message);
-            }
+            //}
+            //catch (Exception e) {
+                //menu.ShowMessage(e.GetType().ToString());
+                //menu.ShowMessage(e.Message);
+            //}
             return false;
         }
 
@@ -336,7 +334,7 @@ namespace GalleryManagerConsole.Storage {
             using DbConnection connection = GetConnection();
             long result = 0;
 
-            try {
+            //try {
                 connection.Open();
 
                 using (var cmd = connection.CreateCommand()) {
@@ -356,18 +354,18 @@ namespace GalleryManagerConsole.Storage {
                         result += reader.GetInt64(0);
                     }
                 }
-            }
-            catch (Exception e) {
-                menu.ShowMessage(e.GetType().ToString());
-                menu.ShowMessage(e.Message);
-            }
+            //}
+            //catch (Exception e) {
+                //menu.ShowMessage(e.GetType().ToString());
+                //menu.ShowMessage(e.Message);
+            //}
             return result;
         }
 
         public long TotalPictures() {
             using DbConnection connection = GetConnection();
             long result = 0;
-            try {
+            //try {
                 connection.Open();
                 using var cmd = connection.CreateCommand();
                 cmd.CommandText = "SELECT COUNT(*) FROM `pictures`;";
@@ -376,18 +374,18 @@ namespace GalleryManagerConsole.Storage {
                     reader.Read();
                     result += reader.GetInt64(0);
                 }
-            }
-            catch (Exception e) {
-                menu.ShowMessage(e.GetType().ToString());
-                menu.ShowMessage(e.Message);
-            }
+            //}
+            //catch (Exception e) {
+                //menu.ShowMessage(e.GetType().ToString());
+                //menu.ShowMessage(e.Message);
+            //}
             return result;
         }
 
         public long TotalVideos() {
             using DbConnection connection = GetConnection();
             long result = 0;
-            try {
+            //try {
                 connection.Open();
                 using var cmd = connection.CreateCommand();
                 cmd.CommandText = "SELECT COUNT(*) FROM `videos`;";
@@ -396,11 +394,11 @@ namespace GalleryManagerConsole.Storage {
                     reader.Read();
                     result += reader.GetInt64(0);
                 }
-            }
-            catch (Exception e) {
-                menu.ShowMessage(e.GetType().ToString());
-                menu.ShowMessage(e.Message);
-            }
+            //}
+            //catch (Exception e) {
+               // menu.ShowMessage(e.GetType().ToString());
+                //menu.ShowMessage(e.Message);
+            //}
             return result;
         }
 
@@ -417,14 +415,14 @@ namespace GalleryManagerConsole.Storage {
             };
 
             using DbConnection connection = GetConnection();
-            try {
+            //try {
                 connection.Open();
-            }
-            catch (Exception e) {
-                menu.ShowMessage(e.GetType().ToString());
-                menu.ShowMessage(e.Message);
-                return false;
-            }
+            //}
+            //catch (Exception e) {
+             //   menu.ShowMessage(e.GetType().ToString());
+             //   menu.ShowMessage(e.Message);
+             //   return false;
+            //}
 
             int deletedCount = 0;
             foreach (string table in tables) {
@@ -467,7 +465,7 @@ namespace GalleryManagerConsole.Storage {
         // This method checks if the gallery already contains picture/video with specified hash
         public bool Contains(Media media) {
             using DbConnection connection = GetConnection();
-            try {
+            //try {
                 connection.Open();
 
                 // Check in videos
@@ -495,11 +493,11 @@ namespace GalleryManagerConsole.Storage {
                     if (reader.HasRows)
                         return true;
                 }
-            }
-            catch (Exception e) {
-                menu.ShowMessage(e.GetType().ToString());
-                menu.ShowMessage(e.Message);
-            }
+            //}
+            //catch (Exception e) {
+                //menu.ShowMessage(e.GetType().ToString());
+                //menu.ShowMessage(e.Message);
+            //}
             return false;
         }
     }

@@ -1,16 +1,14 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.IO;
 using System.Threading.Tasks;
 
 using Microsoft.Data.Sqlite;
-using MySql.Data.MySqlClient;
 
 using GalleryManager.Types;
 using System.Diagnostics;
+using MySqlConnector;
 
 namespace GalleryManager.Storage {
     public class DatabaseStorage : IStorage {
@@ -72,6 +70,12 @@ namespace GalleryManager.Storage {
 
             try {
                 connection.Open();
+
+                // Set charset cause for some reason it started crashing without it
+                using (var cmd = connection.CreateCommand()) {
+                    cmd.CommandText = "SET NAMES 'utf8'";
+                    cmd.ExecuteNonQuery();
+                }
 
                 // Check for table "albums"
                 if (!TableExists("albums", connection))

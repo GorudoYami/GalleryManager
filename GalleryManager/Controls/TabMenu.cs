@@ -33,17 +33,30 @@ namespace GalleryManager.Controls {
                 control.Padding = new Padding(0);
             }
 
-            Tabs[SelectedIndex].Dock = DockStyle.Fill;
             mainLayout.Controls.Add(Tabs[SelectedIndex], 1, 0);
             mainLayout.SetRowSpan(Tabs[SelectedIndex], 7);
         }
 
         private void MenuIcon_Click(object sender, EventArgs e) {
-
+            // Toggle extension
         }
 
         private void MenuOption_Click(object sender, EventArgs e) {
-            MessageBox.Show("");
+            MenuOption option = (MenuOption)sender;
+            if (option.Index != SelectedIndex) {
+                mainLayout.Controls.Remove(Tabs[SelectedIndex]);
+                SelectedIndex = option.Index;
+                mainLayout.Controls.Add(Tabs[SelectedIndex], 1, 0);
+                mainLayout.SetRowSpan(Tabs[SelectedIndex], 7);
+            }
+        }
+
+        private void MenuOption_MouseEnter(object sender, EventArgs e) {
+            BackColor = Color.FromArgb(100, 100, 100);
+        }
+
+        private void MenuOption_MouseLeave(object sender, EventArgs e) {
+            BackColor = Color.FromArgb(55, 55, 55);
         }
     }
 }

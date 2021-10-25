@@ -96,6 +96,7 @@ namespace GalleryManager.Controls {
             // menuOption4
             // 
             this.menuOption4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
+            this.menuOption4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.menuOption4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.menuOption4.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.menuOption4.ForeColor = System.Drawing.Color.White;
@@ -107,10 +108,13 @@ namespace GalleryManager.Controls {
             this.menuOption4.OptionText = "Info";
             this.menuOption4.Size = new System.Drawing.Size(160, 60);
             this.menuOption4.TabIndex = 3;
+            this.menuOption4.Click += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption4.DoubleClick += new System.EventHandler(this.MenuOption_Click);
             // 
             // menuOption3
             // 
             this.menuOption3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
+            this.menuOption3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.menuOption3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.menuOption3.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.menuOption3.ForeColor = System.Drawing.Color.White;
@@ -122,10 +126,13 @@ namespace GalleryManager.Controls {
             this.menuOption3.OptionText = "Options";
             this.menuOption3.Size = new System.Drawing.Size(160, 60);
             this.menuOption3.TabIndex = 4;
+            this.menuOption3.Click += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption3.DoubleClick += new System.EventHandler(this.MenuOption_Click);
             // 
             // menuOption2
             // 
             this.menuOption2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
+            this.menuOption2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.menuOption2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.menuOption2.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.menuOption2.ForeColor = System.Drawing.Color.White;
@@ -137,10 +144,13 @@ namespace GalleryManager.Controls {
             this.menuOption2.OptionText = "Duplicates";
             this.menuOption2.Size = new System.Drawing.Size(160, 60);
             this.menuOption2.TabIndex = 5;
+            this.menuOption2.Click += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption2.DoubleClick += new System.EventHandler(this.MenuOption_Click);
             // 
             // menuOption1
             // 
             this.menuOption1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
+            this.menuOption1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.menuOption1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.menuOption1.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.menuOption1.ForeColor = System.Drawing.Color.White;
@@ -152,10 +162,13 @@ namespace GalleryManager.Controls {
             this.menuOption1.OptionText = "Import";
             this.menuOption1.Size = new System.Drawing.Size(160, 60);
             this.menuOption1.TabIndex = 6;
+            this.menuOption1.Click += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption1.DoubleClick += new System.EventHandler(this.MenuOption_Click);
             // 
             // menuOption0
             // 
             this.menuOption0.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(55)))), ((int)(((byte)(55)))));
+            this.menuOption0.Cursor = System.Windows.Forms.Cursors.Hand;
             this.menuOption0.Dock = System.Windows.Forms.DockStyle.Fill;
             this.menuOption0.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
             this.menuOption0.ForeColor = System.Drawing.Color.White;
@@ -167,6 +180,8 @@ namespace GalleryManager.Controls {
             this.menuOption0.OptionText = "Collection";
             this.menuOption0.Size = new System.Drawing.Size(160, 60);
             this.menuOption0.TabIndex = 7;
+            this.menuOption0.Click += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption0.DoubleClick += new System.EventHandler(this.MenuOption_Click);
             // 
             // TabMenu
             // 

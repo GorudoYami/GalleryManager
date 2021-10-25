@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Threading;
@@ -82,7 +83,7 @@ namespace GalleryManager {
 
             mtx.WaitOne();
             if (directories.Contains(directory)) {
-                Console.WriteLine("Directory has been already added!");
+                Debug.WriteLine("Directory has been already added!");
                 mtx.ReleaseMutex();
                 return;
             }
@@ -96,7 +97,7 @@ namespace GalleryManager {
         public async Task RemoveDriveAsync(DriveInfo drive) {
             mtx.WaitOne();
             if (!drives.Contains(drive)) {
-                Console.WriteLine("Drive is not being processed!");
+                Debug.WriteLine("Drive is not being processed!");
                 mtx.ReleaseMutex();
                 return;
             }
@@ -117,7 +118,7 @@ namespace GalleryManager {
         public async Task RemoveDirectoryAsync(DirectoryInfo directory) {
             mtx.WaitOne();
             if (!directories.Contains(directory)) {
-                Console.WriteLine("Directory is not being processed!");
+                Debug.WriteLine("Directory is not being processed!");
                 mtx.ReleaseMutex();
                 return;
             }
@@ -214,8 +215,8 @@ namespace GalleryManager {
                     media.Hash = BitConverter.ToString(hash).Replace("-", string.Empty);
                 }
                 catch (Exception e) {
-                    Console.WriteLine(e.GetType());
-                    Console.WriteLine(e.Message);
+                    Debug.WriteLine(e.GetType());
+                    Debug.WriteLine(e.Message);
                     continue;
                 }
 
@@ -236,12 +237,12 @@ namespace GalleryManager {
             mtx.WaitOne();
             driveImports[drive] = imports;
             mtx.ReleaseMutex();
-            Console.WriteLine("Drive '" + drive.Name + "' has been processed:");
-            Console.WriteLine("Total files: " + fileCount["total"]);
-            Console.WriteLine("Total pictures: " + fileCount["pictures"]);
-            Console.WriteLine("Total videos: " + fileCount["videos"]);
-            Console.WriteLine("New pictures: " + fileCount["new-pictures"]);
-            Console.WriteLine("New videos: " + fileCount["new-videos"]);
+            Debug.WriteLine("Drive '" + drive.Name + "' has been processed:");
+            Debug.WriteLine("Total files: " + fileCount["total"]);
+            Debug.WriteLine("Total pictures: " + fileCount["pictures"]);
+            Debug.WriteLine("Total videos: " + fileCount["videos"]);
+            Debug.WriteLine("New pictures: " + fileCount["new-pictures"]);
+            Debug.WriteLine("New videos: " + fileCount["new-videos"]);
         }
 
         private void ProcessDirectory(DirectoryInfo directory, CancellationToken token) {
@@ -284,8 +285,8 @@ namespace GalleryManager {
                     media.Hash = BitConverter.ToString(hash).Replace("-", string.Empty);
                 }
                 catch (Exception e) {
-                    Console.WriteLine(e.GetType());
-                    Console.WriteLine(e.Message);
+                    Debug.WriteLine(e.GetType());
+                    Debug.WriteLine(e.Message);
                     continue;
                 }
 
@@ -306,12 +307,12 @@ namespace GalleryManager {
             mtx.WaitOne();
             directoryImports[directory] = imports;
             mtx.ReleaseMutex();
-            Console.WriteLine("Directory '" + directory.Name + "' has been processed:");
-            Console.WriteLine("Total files: " + fileCount["total"]);
-            Console.WriteLine("Total pictures: " + fileCount["pictures"]);
-            Console.WriteLine("Total videos: " + fileCount["videos"]);
-            Console.WriteLine("New pictures: " + fileCount["new-pictures"]);
-            Console.WriteLine("New videos: " + fileCount["new-videos"]);
+            Debug.WriteLine("Directory '" + directory.Name + "' has been processed:");
+            Debug.WriteLine("Total files: " + fileCount["total"]);
+            Debug.WriteLine("Total pictures: " + fileCount["pictures"]);
+            Debug.WriteLine("Total videos: " + fileCount["videos"]);
+            Debug.WriteLine("New pictures: " + fileCount["new-pictures"]);
+            Debug.WriteLine("New videos: " + fileCount["new-videos"]);
         }
 
         public async void StartImport() {
@@ -348,8 +349,8 @@ namespace GalleryManager {
                 }
 
                 mtx.ReleaseMutex();
-                Console.WriteLine("Importing process has been completed!");
-                Console.WriteLine("Total imported files: " + importedFiles);
+                Debug.WriteLine("Importing process has been completed!");
+                Debug.WriteLine("Total imported files: " + importedFiles);
             });
         }
 
@@ -365,8 +366,8 @@ namespace GalleryManager {
                         subdir.Create();
                 }
                 catch (Exception e) {
-                    Console.WriteLine("ERROR: " + e.GetType());
-                    Console.WriteLine(e.Message);
+                    Debug.WriteLine("ERROR: " + e.GetType());
+                    Debug.WriteLine(e.Message);
                     continue;
                 }
 
@@ -382,8 +383,8 @@ namespace GalleryManager {
                     File.Copy(media.Path, subdir.FullName + "/" + newName + media.Format);
                 }
                 catch (Exception e) {
-                    Console.WriteLine("ERROR: " + e.GetType());
-                    Console.WriteLine(e.Message);
+                    Debug.WriteLine("ERROR: " + e.GetType());
+                    Debug.WriteLine(e.Message);
                     continue;
                 }
 
