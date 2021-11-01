@@ -18,30 +18,44 @@ namespace GalleryManager.Controls {
         public new event EventHandler Click {
             add {
                 base.Click += value;
-                foreach (Control control in Controls) {
-                    control.Click += value;
-                }
+                iconPictureBox.Click += value;
             }
             remove {
                 base.Click -= value;
-                foreach (Control control in Controls) {
-                    control.Click -= value;
-                }
+                iconPictureBox.Click -= value;
             }
         }
 
         public new event EventHandler DoubleClick {
             add {
                 base.DoubleClick += value;
-                foreach (Control control in Controls) {
-                    control.DoubleClick += value;
-                }
+                iconPictureBox.DoubleClick += value;
             }
             remove {
                 base.DoubleClick -= value;
-                foreach (Control control in Controls) {
-                    control.DoubleClick -= value;
-                }
+                iconPictureBox.DoubleClick -= value;
+            }
+        }
+
+        public new event EventHandler MouseEnter {
+            add {
+                base.MouseEnter += value;
+                iconPictureBox.MouseEnter += value;
+            }
+            remove {
+                base.MouseEnter -= value;
+                iconPictureBox.MouseEnter -= value;
+            }
+        }
+
+        public new event EventHandler MouseLeave {
+            add {
+                base.MouseLeave += value;
+                iconPictureBox.MouseLeave += value;
+            }
+            remove {
+                base.MouseLeave -= value;
+                iconPictureBox.MouseLeave -= value;
             }
         }
 

@@ -81,7 +81,7 @@ namespace GalleryManager.Controls {
             this.ForeColor = System.Drawing.Color.White;
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "MenuOption";
-            this.Size = new System.Drawing.Size(160, 60);;
+            this.Size = new System.Drawing.Size(160, 60);
             this.mainLayout.ResumeLayout(false);
             this.mainLayout.PerformLayout();
             this.ResumeLayout(false);

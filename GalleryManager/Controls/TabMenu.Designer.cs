@@ -108,8 +108,7 @@ namespace GalleryManager.Controls {
             this.menuOption4.OptionText = "Info";
             this.menuOption4.Size = new System.Drawing.Size(160, 60);
             this.menuOption4.TabIndex = 3;
-            this.menuOption4.Click += new System.EventHandler(this.MenuOption_Click);
-            this.menuOption4.DoubleClick += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption4.Tag = this.menuOption4;
             // 
             // menuOption3
             // 
@@ -126,8 +125,7 @@ namespace GalleryManager.Controls {
             this.menuOption3.OptionText = "Options";
             this.menuOption3.Size = new System.Drawing.Size(160, 60);
             this.menuOption3.TabIndex = 4;
-            this.menuOption3.Click += new System.EventHandler(this.MenuOption_Click);
-            this.menuOption3.DoubleClick += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption3.Tag = this.menuOption3;
             // 
             // menuOption2
             // 
@@ -144,8 +142,7 @@ namespace GalleryManager.Controls {
             this.menuOption2.OptionText = "Duplicates";
             this.menuOption2.Size = new System.Drawing.Size(160, 60);
             this.menuOption2.TabIndex = 5;
-            this.menuOption2.Click += new System.EventHandler(this.MenuOption_Click);
-            this.menuOption2.DoubleClick += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption2.Tag = this.menuOption2;
             // 
             // menuOption1
             // 
@@ -162,8 +159,7 @@ namespace GalleryManager.Controls {
             this.menuOption1.OptionText = "Import";
             this.menuOption1.Size = new System.Drawing.Size(160, 60);
             this.menuOption1.TabIndex = 6;
-            this.menuOption1.Click += new System.EventHandler(this.MenuOption_Click);
-            this.menuOption1.DoubleClick += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption1.Tag = this.menuOption1;
             // 
             // menuOption0
             // 
@@ -180,8 +176,7 @@ namespace GalleryManager.Controls {
             this.menuOption0.OptionText = "Collection";
             this.menuOption0.Size = new System.Drawing.Size(160, 60);
             this.menuOption0.TabIndex = 7;
-            this.menuOption0.Click += new System.EventHandler(this.MenuOption_Click);
-            this.menuOption0.DoubleClick += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption0.Tag = this.menuOption0;
             // 
             // TabMenu
             // 
