@@ -24,12 +24,12 @@ namespace GalleryManager.Controls {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("examplevid.mp4");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("2021-06", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("examplepic.png");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("2021-05", new System.Windows.Forms.TreeNode[] {
-            treeNode3});
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("examplevid.mp4");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("2021-06", new System.Windows.Forms.TreeNode[] {
+            treeNode5});
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("examplepic.png");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("2021-05", new System.Windows.Forms.TreeNode[] {
+            treeNode7});
             this.contentPanelLayout0 = new System.Windows.Forms.TableLayoutPanel();
             this.infoPanel = new System.Windows.Forms.Panel();
             this.infoPanelLayout = new System.Windows.Forms.TableLayoutPanel();
@@ -48,22 +48,18 @@ namespace GalleryManager.Controls {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.toolbarLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.iconAddDirectory = new System.Windows.Forms.PictureBox();
-            this.iconDelete = new System.Windows.Forms.PictureBox();
-            this.iconCopy = new System.Windows.Forms.PictureBox();
-            this.iconSearch = new System.Windows.Forms.PictureBox();
-            this.iconStar = new System.Windows.Forms.PictureBox();
+            this.iconPanel1 = new GalleryManager.Controls.IconPanel();
+            this.iconPanel2 = new GalleryManager.Controls.IconPanel();
+            this.iconPanel3 = new GalleryManager.Controls.IconPanel();
+            this.iconPanel4 = new GalleryManager.Controls.IconPanel();
+            this.iconPanel5 = new GalleryManager.Controls.IconPanel();
+            this.iconPanel6 = new GalleryManager.Controls.IconPanel();
             this.treeView = new System.Windows.Forms.TreeView();
             this.contentPanelLayout0.SuspendLayout();
             this.infoPanel.SuspendLayout();
             this.infoPanelLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.toolbarLayout.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.iconAddDirectory)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconDelete)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconCopy)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconSearch)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconStar)).BeginInit();
             this.SuspendLayout();
             // 
             // contentPanelLayout0
@@ -322,11 +318,12 @@ namespace GalleryManager.Controls {
             this.toolbarLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.toolbarLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.toolbarLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.toolbarLayout.Controls.Add(this.iconAddDirectory, 0, 0);
-            this.toolbarLayout.Controls.Add(this.iconDelete, 1, 0);
-            this.toolbarLayout.Controls.Add(this.iconCopy, 2, 0);
-            this.toolbarLayout.Controls.Add(this.iconSearch, 3, 0);
-            this.toolbarLayout.Controls.Add(this.iconStar, 4, 0);
+            this.toolbarLayout.Controls.Add(this.iconPanel1, 0, 0);
+            this.toolbarLayout.Controls.Add(this.iconPanel2, 1, 0);
+            this.toolbarLayout.Controls.Add(this.iconPanel3, 2, 0);
+            this.toolbarLayout.Controls.Add(this.iconPanel4, 3, 0);
+            this.toolbarLayout.Controls.Add(this.iconPanel5, 4, 0);
+            this.toolbarLayout.Controls.Add(this.iconPanel6, 5, 0);
             this.toolbarLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolbarLayout.Location = new System.Drawing.Point(6, 0);
             this.toolbarLayout.Margin = new System.Windows.Forms.Padding(6, 0, 0, 0);
@@ -336,70 +333,83 @@ namespace GalleryManager.Controls {
             this.toolbarLayout.Size = new System.Drawing.Size(494, 35);
             this.toolbarLayout.TabIndex = 1;
             // 
-            // iconAddDirectory
+            // iconPanel1
             // 
-            this.iconAddDirectory.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.iconAddDirectory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iconAddDirectory.Image = global::GalleryManager.Properties.Resources.folder_add;
-            this.iconAddDirectory.Location = new System.Drawing.Point(8, 8);
-            this.iconAddDirectory.Margin = new System.Windows.Forms.Padding(8);
-            this.iconAddDirectory.Name = "iconAddDirectory";
-            this.iconAddDirectory.Size = new System.Drawing.Size(19, 19);
-            this.iconAddDirectory.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.iconAddDirectory.TabIndex = 0;
-            this.iconAddDirectory.TabStop = false;
+            this.iconPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.iconPanel1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.iconPanel1.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.iconPanel1.Image = global::GalleryManager.Properties.Resources.folder_add;
+            this.iconPanel1.Location = new System.Drawing.Point(0, 0);
+            this.iconPanel1.Margin = new System.Windows.Forms.Padding(0);
+            this.iconPanel1.Name = "iconPanel1";
+            this.iconPanel1.Padding = new System.Windows.Forms.Padding(8);
+            this.iconPanel1.Size = new System.Drawing.Size(35, 35);
+            this.iconPanel1.TabIndex = 5;
             // 
-            // iconDelete
+            // iconPanel2
             // 
-            this.iconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.iconDelete.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iconDelete.Image = global::GalleryManager.Properties.Resources.trash;
-            this.iconDelete.Location = new System.Drawing.Point(43, 8);
-            this.iconDelete.Margin = new System.Windows.Forms.Padding(8);
-            this.iconDelete.Name = "iconDelete";
-            this.iconDelete.Size = new System.Drawing.Size(19, 19);
-            this.iconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.iconDelete.TabIndex = 1;
-            this.iconDelete.TabStop = false;
+            this.iconPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.iconPanel2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.iconPanel2.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.iconPanel2.Image = global::GalleryManager.Properties.Resources.trash;
+            this.iconPanel2.Location = new System.Drawing.Point(35, 0);
+            this.iconPanel2.Margin = new System.Windows.Forms.Padding(0);
+            this.iconPanel2.Name = "iconPanel2";
+            this.iconPanel2.Padding = new System.Windows.Forms.Padding(8);
+            this.iconPanel2.Size = new System.Drawing.Size(35, 35);
+            this.iconPanel2.TabIndex = 6;
             // 
-            // iconCopy
+            // iconPanel3
             // 
-            this.iconCopy.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.iconCopy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iconCopy.Image = global::GalleryManager.Properties.Resources.document_duplicate;
-            this.iconCopy.Location = new System.Drawing.Point(78, 8);
-            this.iconCopy.Margin = new System.Windows.Forms.Padding(8);
-            this.iconCopy.Name = "iconCopy";
-            this.iconCopy.Size = new System.Drawing.Size(19, 19);
-            this.iconCopy.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.iconCopy.TabIndex = 2;
-            this.iconCopy.TabStop = false;
+            this.iconPanel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.iconPanel3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.iconPanel3.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.iconPanel3.Image = global::GalleryManager.Properties.Resources.document_duplicate;
+            this.iconPanel3.Location = new System.Drawing.Point(70, 0);
+            this.iconPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.iconPanel3.Name = "iconPanel3";
+            this.iconPanel3.Padding = new System.Windows.Forms.Padding(8);
+            this.iconPanel3.Size = new System.Drawing.Size(35, 35);
+            this.iconPanel3.TabIndex = 7;
             // 
-            // iconSearch
+            // iconPanel4
             // 
-            this.iconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.iconSearch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iconSearch.Image = global::GalleryManager.Properties.Resources.search;
-            this.iconSearch.Location = new System.Drawing.Point(113, 8);
-            this.iconSearch.Margin = new System.Windows.Forms.Padding(8);
-            this.iconSearch.Name = "iconSearch";
-            this.iconSearch.Size = new System.Drawing.Size(19, 19);
-            this.iconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.iconSearch.TabIndex = 3;
-            this.iconSearch.TabStop = false;
+            this.iconPanel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.iconPanel4.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.iconPanel4.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.iconPanel4.Image = global::GalleryManager.Properties.Resources.search;
+            this.iconPanel4.Location = new System.Drawing.Point(105, 0);
+            this.iconPanel4.Margin = new System.Windows.Forms.Padding(0);
+            this.iconPanel4.Name = "iconPanel4";
+            this.iconPanel4.Padding = new System.Windows.Forms.Padding(8);
+            this.iconPanel4.Size = new System.Drawing.Size(35, 35);
+            this.iconPanel4.TabIndex = 8;
             // 
-            // iconStar
+            // iconPanel5
             // 
-            this.iconStar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.iconStar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iconStar.Image = global::GalleryManager.Properties.Resources.star;
-            this.iconStar.Location = new System.Drawing.Point(148, 8);
-            this.iconStar.Margin = new System.Windows.Forms.Padding(8);
-            this.iconStar.Name = "iconStar";
-            this.iconStar.Size = new System.Drawing.Size(19, 19);
-            this.iconStar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.iconStar.TabIndex = 4;
-            this.iconStar.TabStop = false;
+            this.iconPanel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.iconPanel5.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.iconPanel5.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.iconPanel5.Image = global::GalleryManager.Properties.Resources.star;
+            this.iconPanel5.Location = new System.Drawing.Point(140, 0);
+            this.iconPanel5.Margin = new System.Windows.Forms.Padding(0);
+            this.iconPanel5.Name = "iconPanel5";
+            this.iconPanel5.Padding = new System.Windows.Forms.Padding(8);
+            this.iconPanel5.Size = new System.Drawing.Size(35, 35);
+            this.iconPanel5.TabIndex = 9;
+            // 
+            // iconPanel6
+            // 
+            this.iconPanel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.iconPanel6.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.iconPanel6.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.iconPanel6.Image = global::GalleryManager.Properties.Resources.refresh;
+            this.iconPanel6.Location = new System.Drawing.Point(175, 0);
+            this.iconPanel6.Margin = new System.Windows.Forms.Padding(0);
+            this.iconPanel6.Name = "iconPanel6";
+            this.iconPanel6.Padding = new System.Windows.Forms.Padding(8);
+            this.iconPanel6.Size = new System.Drawing.Size(35, 35);
+            this.iconPanel6.TabIndex = 10;
             // 
             // treeView
             // 
@@ -407,24 +417,26 @@ namespace GalleryManager.Controls {
             this.treeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.treeView.Cursor = System.Windows.Forms.Cursors.Default;
             this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.treeView.ForeColor = System.Drawing.Color.White;
+            this.treeView.FullRowSelect = true;
             this.treeView.Indent = 20;
             this.treeView.ItemHeight = 25;
             this.treeView.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             this.treeView.Location = new System.Drawing.Point(10, 35);
             this.treeView.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
             this.treeView.Name = "treeView";
-            treeNode1.Name = "Node1";
-            treeNode1.Text = "examplevid.mp4";
-            treeNode2.Name = "Node0";
-            treeNode2.Text = "2021-06";
-            treeNode3.Name = "Node2";
-            treeNode3.Text = "examplepic.png";
-            treeNode4.Name = "Node5";
-            treeNode4.Text = "2021-05";
+            treeNode5.Name = "Node1";
+            treeNode5.Text = "examplevid.mp4";
+            treeNode6.Name = "Node0";
+            treeNode6.Text = "2021-06";
+            treeNode7.Name = "Node2";
+            treeNode7.Text = "examplepic.png";
+            treeNode8.Name = "Node5";
+            treeNode8.Text = "2021-05";
             this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2,
-            treeNode4});
+            treeNode6,
+            treeNode8});
             this.treeView.ShowLines = false;
             this.treeView.Size = new System.Drawing.Size(480, 505);
             this.treeView.TabIndex = 2;
@@ -446,11 +458,6 @@ namespace GalleryManager.Controls {
             this.infoPanelLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previewBox)).EndInit();
             this.toolbarLayout.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.iconAddDirectory)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconDelete)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconCopy)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconSearch)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iconStar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -475,11 +482,12 @@ namespace GalleryManager.Controls {
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TableLayoutPanel toolbarLayout;
-        private System.Windows.Forms.PictureBox iconAddDirectory;
-        private System.Windows.Forms.PictureBox iconDelete;
-        private System.Windows.Forms.PictureBox iconCopy;
-        private System.Windows.Forms.PictureBox iconSearch;
-        private System.Windows.Forms.PictureBox iconStar;
         private System.Windows.Forms.TreeView treeView;
+        private IconPanel iconPanel1;
+        private IconPanel iconPanel2;
+        private IconPanel iconPanel3;
+        private IconPanel iconPanel4;
+        private IconPanel iconPanel5;
+        private IconPanel iconPanel6;
     }
 }

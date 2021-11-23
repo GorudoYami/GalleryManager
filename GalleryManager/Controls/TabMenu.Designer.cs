@@ -109,6 +109,10 @@ namespace GalleryManager.Controls {
             this.menuOption4.Size = new System.Drawing.Size(160, 60);
             this.menuOption4.TabIndex = 3;
             this.menuOption4.Tag = this.menuOption4;
+            this.menuOption4.Click += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption4.DoubleClick += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption4.MouseEnter += new System.EventHandler(this.MenuOption_MouseEnter);
+            this.menuOption4.MouseLeave += new System.EventHandler(this.MenuOption_MouseLeave);
             // 
             // menuOption3
             // 
@@ -126,6 +130,10 @@ namespace GalleryManager.Controls {
             this.menuOption3.Size = new System.Drawing.Size(160, 60);
             this.menuOption3.TabIndex = 4;
             this.menuOption3.Tag = this.menuOption3;
+            this.menuOption3.Click += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption3.DoubleClick += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption3.MouseEnter += new System.EventHandler(this.MenuOption_MouseEnter);
+            this.menuOption3.MouseLeave += new System.EventHandler(this.MenuOption_MouseLeave);
             // 
             // menuOption2
             // 
@@ -143,6 +151,10 @@ namespace GalleryManager.Controls {
             this.menuOption2.Size = new System.Drawing.Size(160, 60);
             this.menuOption2.TabIndex = 5;
             this.menuOption2.Tag = this.menuOption2;
+            this.menuOption2.Click += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption2.DoubleClick += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption2.MouseEnter += new System.EventHandler(this.MenuOption_MouseEnter);
+            this.menuOption2.MouseLeave += new System.EventHandler(this.MenuOption_MouseLeave);
             // 
             // menuOption1
             // 
@@ -160,6 +172,10 @@ namespace GalleryManager.Controls {
             this.menuOption1.Size = new System.Drawing.Size(160, 60);
             this.menuOption1.TabIndex = 6;
             this.menuOption1.Tag = this.menuOption1;
+            this.menuOption1.Click += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption1.DoubleClick += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption1.MouseEnter += new System.EventHandler(this.MenuOption_MouseEnter);
+            this.menuOption1.MouseLeave += new System.EventHandler(this.MenuOption_MouseLeave);
             // 
             // menuOption0
             // 
@@ -177,6 +193,10 @@ namespace GalleryManager.Controls {
             this.menuOption0.Size = new System.Drawing.Size(160, 60);
             this.menuOption0.TabIndex = 7;
             this.menuOption0.Tag = this.menuOption0;
+            this.menuOption0.Click += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption0.DoubleClick += new System.EventHandler(this.MenuOption_Click);
+            this.menuOption0.MouseEnter += new System.EventHandler(this.MenuOption_MouseEnter);
+            this.menuOption0.MouseLeave += new System.EventHandler(this.MenuOption_MouseLeave);
             // 
             // TabMenu
             // 

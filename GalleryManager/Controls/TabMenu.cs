@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -51,15 +52,36 @@ namespace GalleryManager.Controls {
         }
 
         private void MenuOption_Click(object sender, EventArgs e) {
+            MenuOption option = (MenuOption)((Control)sender).Tag;
+            if (option.Index == SelectedIndex)
+                return;
 
+            // Reset previous menu item
+            // Remove previous tab
+            MenuOption prevOption = (MenuOption)mainLayout.GetControlFromPosition(0, SelectedIndex + 1);
+            prevOption.BackColor = Color.FromArgb(55, 55, 55);
+            mainLayout.Controls.Remove(Tabs[SelectedIndex]);
+
+            // Highlight selected menu item
+            SelectedIndex = option.Index;
+            option.BackColor = Color.FromArgb(100, 100, 100);
+
+            // Display selected tab
+            mainLayout.Controls.Add(Tabs[SelectedIndex], 1, 0);
+            mainLayout.SetRowSpan(Tabs[SelectedIndex], 7);
         }
 
         private void MenuOption_MouseEnter(object sender, EventArgs e) {
-
+            MenuOption option = (MenuOption)((Control)sender).Tag;
+            option.BackColor = Color.FromArgb(100, 100, 100);
         }
 
         private void MenuOption_MouseLeave(object sender, EventArgs e) {
+            MenuOption option = (MenuOption)((Control)sender).Tag;
+            if (option.Index == SelectedIndex)
+                return;
 
+            option.BackColor = Color.FromArgb(55, 55, 55);
         }
     }
 }
