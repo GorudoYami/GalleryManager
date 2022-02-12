@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using GalleryManager.Types;
+using GalleryManager.Models;
 
 namespace GalleryManager.Controls {
     public partial class ImportTab : UserControl {
@@ -44,6 +44,7 @@ namespace GalleryManager.Controls {
             foreach (var drive in drives) {
                 // TODO
                 // Add an async "ready check" for drives (that are not active) with timeout just in case
+                // Add try catch (if drive is locked, its throws an exception)
                 ListViewItem item = new() {
                     Text = drive.Name
                 };

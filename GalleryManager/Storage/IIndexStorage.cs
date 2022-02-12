@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using GalleryManager.Types;
+using GalleryManager.Models;
 
 namespace GalleryManager.Storage {
-    public interface IStorage {
+    public interface IIndexStorage {
         public bool Setup();
         public bool AddPicture(Media picture);
         public bool AddVideo(Media video);

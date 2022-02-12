@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GalleryManager.Types {
+namespace GalleryManager.Models {
     public static class Units {
         public const long KB = 1024;
         public const long MB = KB * KB;

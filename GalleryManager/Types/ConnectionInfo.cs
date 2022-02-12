@@ -1,5 +1,5 @@
 ﻿
-namespace GalleryManager.Types {
+namespace GalleryManager.Models {
     public enum ConnectionType {
         SQLite,
         MySQL

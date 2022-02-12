@@ -24,12 +24,8 @@ namespace GalleryManager.Controls {
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("examplevid.mp4");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("2021-06", new System.Windows.Forms.TreeNode[] {
-            treeNode5});
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("examplepic.png");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("2021-05", new System.Windows.Forms.TreeNode[] {
-            treeNode7});
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CollectionTab));
             this.contentPanelLayout0 = new System.Windows.Forms.TableLayoutPanel();
             this.infoPanel = new System.Windows.Forms.Panel();
             this.infoPanelLayout = new System.Windows.Forms.TableLayoutPanel();
@@ -54,7 +50,7 @@ namespace GalleryManager.Controls {
             this.iconPanel4 = new GalleryManager.Controls.IconPanel();
             this.iconPanel5 = new GalleryManager.Controls.IconPanel();
             this.iconPanel6 = new GalleryManager.Controls.IconPanel();
-            this.treeView = new System.Windows.Forms.TreeView();
+            this.collectionView = new GalleryManager.Controls.CollectionView();
             this.contentPanelLayout0.SuspendLayout();
             this.infoPanel.SuspendLayout();
             this.infoPanelLayout.SuspendLayout();
@@ -69,7 +65,7 @@ namespace GalleryManager.Controls {
             this.contentPanelLayout0.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.contentPanelLayout0.Controls.Add(this.infoPanel, 1, 0);
             this.contentPanelLayout0.Controls.Add(this.toolbarLayout, 0, 0);
-            this.contentPanelLayout0.Controls.Add(this.treeView, 0, 1);
+            this.contentPanelLayout0.Controls.Add(this.collectionView, 0, 1);
             this.contentPanelLayout0.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentPanelLayout0.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.contentPanelLayout0.Location = new System.Drawing.Point(0, 0);
@@ -411,35 +407,27 @@ namespace GalleryManager.Controls {
             this.iconPanel6.Size = new System.Drawing.Size(35, 35);
             this.iconPanel6.TabIndex = 10;
             // 
-            // treeView
+            // collectionView
             // 
-            this.treeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(75)))), ((int)(((byte)(75)))));
-            this.treeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treeView.Cursor = System.Windows.Forms.Cursors.Default;
-            this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.treeView.ForeColor = System.Drawing.Color.White;
-            this.treeView.FullRowSelect = true;
-            this.treeView.Indent = 20;
-            this.treeView.ItemHeight = 25;
-            this.treeView.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.treeView.Location = new System.Drawing.Point(10, 35);
-            this.treeView.Margin = new System.Windows.Forms.Padding(10, 0, 10, 10);
-            this.treeView.Name = "treeView";
-            treeNode5.Name = "Node1";
-            treeNode5.Text = "examplevid.mp4";
-            treeNode6.Name = "Node0";
-            treeNode6.Text = "2021-06";
-            treeNode7.Name = "Node2";
-            treeNode7.Text = "examplepic.png";
-            treeNode8.Name = "Node5";
-            treeNode8.Text = "2021-05";
-            this.treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode6,
-            treeNode8});
-            this.treeView.ShowLines = false;
-            this.treeView.Size = new System.Drawing.Size(480, 505);
-            this.treeView.TabIndex = 2;
+            this.collectionView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(75)))), ((int)(((byte)(75)))));
+            this.collectionView.BaseDirectory = null;
+            this.collectionView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.collectionView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.collectionView.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawAll;
+            this.collectionView.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.collectionView.ForeColor = System.Drawing.Color.White;
+            this.collectionView.FullRowSelect = true;
+            this.collectionView.ImageIndex = 0;
+            this.collectionView.Indent = 20;
+            this.collectionView.ItemHeight = 25;
+            this.collectionView.Location = new System.Drawing.Point(3, 38);
+            this.collectionView.Name = "collectionView";
+            this.collectionView.SelectColor = System.Drawing.Color.Red;
+            this.collectionView.SelectedImageIndex = 0;
+            this.collectionView.Selection = ((System.Collections.Generic.List<System.Windows.Forms.TreeNode>)(resources.GetObject("collectionView.Selection")));
+            this.collectionView.ShowLines = false;
+            this.collectionView.Size = new System.Drawing.Size(494, 509);
+            this.collectionView.TabIndex = 2;
             // 
             // CollectionTab
             // 
@@ -482,12 +470,12 @@ namespace GalleryManager.Controls {
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TableLayoutPanel toolbarLayout;
-        private System.Windows.Forms.TreeView treeView;
         private IconPanel iconPanel1;
         private IconPanel iconPanel2;
         private IconPanel iconPanel3;
         private IconPanel iconPanel4;
         private IconPanel iconPanel5;
         private IconPanel iconPanel6;
+        private CollectionView collectionView;
     }
 }

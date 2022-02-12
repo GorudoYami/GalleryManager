@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using GalleryManager.Types;
+using GalleryManager.Models;
 
 namespace GalleryManager.Storage {
-    class JsonStorage : IStorage {
+    class JsonStorage : IIndexStorage {
         // TODO
         public bool AddPicture(Media picture) {
             throw new NotImplementedException();

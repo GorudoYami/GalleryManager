@@ -1,114 +1,89 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
-using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Security.Cryptography;
 
 using GalleryManager.Storage;
-using GalleryManager.Types;
+using GalleryManager.Models;
+using GalleryManager.Common;
 
-namespace GalleryManager {
-    public class Indexer {
+namespace GalleryManager;
 
-        private bool working;
-        public bool Working { get { return working; } }
+public class Indexer {
+	public bool Working { get; private set; }
+	public int FileCount { get; private set; }
+	public int IndexedCount { get; private set; }
+	public string GalleryPath { get; set; }
 
-        private ulong filesCount;
-        public ulong FileCount { get { return filesCount; } }
+	private readonly IIndexStorage Storage;
+	private Task MainTask;
+	private CancellationTokenSource TokenSource;
 
-        private ulong filesIndexed;
-        public ulong FilesIndexed { get { return filesIndexed; } }
+	public Indexer(IIndexStorage storage, string galleryPath = null) {
+		if (galleryPath is not null)
+			GalleryPath = galleryPath.Replace("\\", "/");
 
-        private readonly IStorage storage;
-        private Task task;
-        private CancellationTokenSource tokenSource;
-        private readonly string galleryPath;
+		Storage = storage;
+		FileCount = 0;
+		IndexedCount = 0;
+	}
 
-        public Indexer(IStorage storage, string galleryPath) {
-            this.storage = storage;
-            this.galleryPath = galleryPath.Replace("\\", "/");
-            filesCount = 0;
-            filesIndexed = 0;
-        }
+	public void Start() {
+		TokenSource = new CancellationTokenSource();
+		MainTask = Task.Run(() => Run(TokenSource.Token), TokenSource.Token);
+		Working = true;
+	}
 
-        public void Start() {
-            tokenSource = new CancellationTokenSource();
-            task = Task.Run(() => Run(tokenSource.Token), tokenSource.Token);
-            working = true;
-        }
+	public async void Stop() {
+		TokenSource.Cancel();
+		await MainTask;
+		Working = false;
+		TokenSource.Dispose();
+	}
 
-        public async void Stop() {
-            tokenSource.Cancel();
-            await task;
-            working = false;
-            tokenSource.Dispose();
-        }
+	private void Run(CancellationToken token) {
+		DirectoryInfo root;
+		FileInfo[] files;
 
-        private void Run(CancellationToken token) {
-            DirectoryInfo root;
-            FileInfo[] files;
-            using SHA256 sha = SHA256.Create();
+		try {
+			root = new DirectoryInfo(GalleryPath);
+			files = root.GetFiles("*.*", SearchOption.AllDirectories);
+		}
+		catch (Exception e) {
+			Debug.WriteLine(e.GetType().ToString());
+			Debug.WriteLine(e.Message);
+			Working = false;
+			return;
+		}
+		FileCount = files.Length;
 
-            // Get all files
-            try {
-                root = new DirectoryInfo(galleryPath);
-                files = root.GetFiles("*.*", SearchOption.AllDirectories);
-            }
-            catch (Exception e) {
-                Debug.WriteLine(e.GetType().ToString());
-                Debug.WriteLine(e.Message);
-                working = false;
-                return;
-            }
-            filesCount = (ulong)files.Length;
+		foreach (FileInfo fileInfo in files) {
+			if (token.IsCancellationRequested)
+				break;
 
-            // Iterate through all files in gallery
-            for (int i = 0; i < files.Length; i++) {
-                if (token.IsCancellationRequested)
-                    break;
+			IndexedCount++;
 
-                filesIndexed++;
+			Media media = new(fileInfo, GalleryPath);
 
-                Media media = new() {
-                    Path = files[i].FullName.Replace("\\", "/"),
-                    RelativePath = files[i].FullName.Remove(0, galleryPath.Length + 1).Replace("\\", "/"),
-                    Name = files[i].Name,
-                    Format = files[i].Extension,
-                    Size = (ulong)files[i].Length
-                };
+			if (Storage.IsIndexed(media))
+				continue;
 
-                if (storage.IsIndexed(media))
-                    continue;
+			if (!Media.IsPicture(media) && !Media.IsVideo(media)) {
+				Storage.AddUnknown(media);
+				continue;
+			}
+			media.Hash = FileUtils.GetFileHash(fileInfo);
 
-                if (!Media.IsPicture(media) && !Media.IsVideo(media)) {
-                    storage.AddUnknown(media);
-                    continue;
-                }
+			if (Media.IsPicture(media))
+				Storage.AddPicture(media);
+			else if (Media.IsVideo(media))
+				Storage.AddVideo(media);
+		}
 
-                // Calculate hash
-                byte[] hash;
-                try {
-                    FileStream file = files[i].Open(FileMode.Open);
-                    hash = sha.ComputeHash(file);
-                    file.Close();
-                }
-                catch (Exception e) {
-                    Debug.WriteLine(e.GetType().ToString());
-                    Debug.WriteLine(e.Message);
-                    working = false;
-                    return;
-                }
-                media.Hash = BitConverter.ToString(hash).Replace("-", string.Empty);
-
-                if (Media.IsPicture(media))
-                    storage.AddPicture(media);
-                else if (Media.IsVideo(media))
-                    storage.AddVideo(media);
-            }
-            Debug.WriteLine("Indexer finished work:");
-            Debug.WriteLine("Files indexed: " + FilesIndexed);
-            working = false;
-        }
-    }
+		Debug.WriteLine("Indexer finished work");
+		Debug.WriteLine($"Files indexed: {IndexedCount}");
+		Working = false;
+	}
 }
